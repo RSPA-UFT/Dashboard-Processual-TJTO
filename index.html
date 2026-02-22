@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Processual — Mag. Rodrigo Perez Araújo — TJTO</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+:root{--bg:#f0f2f5;--card:#fff;--hdr:#1b2a4a;--hdr2:#243b6a;--tx1:#1a1a2e;--tx2:#6c757d;--txw:#fff;--ac:#2563eb;--c1:#2563eb;--c2:#f59e0b;--c3:#10b981;--c4:#ef4444;--c5:#8b5cf6;--c6:#ec4899;--c7:#06b6d4;--c8:#84cc16;--c9:#f97316;--c10:#6366f1;--gap:14px;--r:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tx1);line-height:1.5}
+.wrap{max-width:1480px;margin:0 auto;padding:var(--gap)}
+.hdr{background:linear-gradient(135deg,var(--hdr),var(--hdr2));color:var(--txw);padding:22px 28px;border-radius:var(--r);margin-bottom:var(--gap);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 4px 14px rgba(27,42,74,.15)}
+.hdr h1{font-size:20px;font-weight:700;letter-spacing:-.3px}.hdr .sub{font-size:12px;opacity:.7;margin-top:3px}
+.badge{background:rgba(255,255,255,.12);padding:5px 14px;border-radius:18px;font-size:12px;font-weight:600}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.kpi{background:var(--card);border-radius:var(--r);padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.06);border-left:4px solid var(--ac);transition:transform .15s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.kpi:nth-child(2){border-left-color:var(--c3)}.kpi:nth-child(3){border-left-color:var(--c2)}.kpi:nth-child(4){border-left-color:var(--c5)}.kpi:nth-child(5){border-left-color:var(--c4)}.kpi:nth-child(6){border-left-color:var(--c6)}.kpi:nth-child(7){border-left-color:var(--c7)}.kpi:nth-child(8){border-left-color:var(--c8)}
+.kpi-l{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-bottom:4px}
+.kpi-v{font-size:24px;font-weight:800}.kpi-s{font-size:11px;color:var(--tx2);margin-top:2px}
+.tabs{display:flex;gap:3px;margin-bottom:var(--gap);background:var(--card);padding:5px;border-radius:var(--r);box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap}
+.tab{padding:7px 16px;border:none;background:0 0;border-radius:6px;font-size:12px;font-weight:700;color:var(--tx2);cursor:pointer;transition:all .15s}
+.tab:hover{background:var(--bg);color:var(--tx1)}.tab.on{background:var(--ac);color:#fff}
+.tp{display:none}.tp.on{display:block}
+.gr{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+.gr.c3{grid-template-columns:repeat(3,1fr)}
+.ch{background:var(--card);border-radius:var(--r);padding:18px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ch.fw{grid-column:1/-1}
+.ch h3{font-size:13px;font-weight:700;margin-bottom:14px;color:var(--tx1)}
+.ch canvas{max-height:310px}
+.tbl{background:var(--card);border-radius:var(--r);padding:18px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow-x:auto;margin-bottom:var(--gap)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{text-align:left;padding:8px 12px;border-bottom:2px solid #e2e8f0;color:var(--tx2);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+tbody td{padding:8px 12px;border-bottom:1px solid #f1f5f9}
+tbody tr:hover{background:#f8fafc}
+.bar-c{display:flex;align-items:center;gap:6px}
+.mb{height:7px;border-radius:4px;min-width:3px}
+.ft{text-align:center;padding:14px;font-size:11px;color:var(--tx2)}
+@media(max-width:900px){.gr,.gr.c3{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.kpi-row{grid-template-columns:1fr}.hdr{flex-direction:column;align-items:flex-start}}
+@media print{body{background:#fff}.kpi,.ch,.tbl{box-shadow:none;border:1px solid #e2e8f0}.ch{break-inside:avoid}}
+    </style>
+</head>
+<body>
+<div class="wrap">
+<header class="hdr">
+    <div><h1>Dashboard Processual — TJTO</h1><div class="sub">Magistrado: Rodrigo da Silva Perez Araújo &middot; 11/05/1994 – 05/09/2024</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge">16.252 processos</span>
+        <span class="badge">27 comarcas</span>
+        <span class="badge">84 varas</span>
+    </div>
+</header>
+
+<section class="kpi-row">
+    <div class="kpi"><div class="kpi-l">Processos</div><div class="kpi-v" id="k1"></div><div class="kpi-s">14 anos de atuação até então</div></div>
+    <div class="kpi"><div class="kpi-l">Valor Total</div><div class="kpi-v" id="k2"></div><div class="kpi-s" id="k2s"></div></div>
+    <div class="kpi"><div class="kpi-l">Valor Mediano</div><div class="kpi-v" id="k3"></div><div class="kpi-s">por processo</div></div>
+    <div class="kpi"><div class="kpi-l">Com Prioridade</div><div class="kpi-v" id="k4"></div><div class="kpi-s" id="k4s"></div></div>
+    <div class="kpi"><div class="kpi-l">Liminares</div><div class="kpi-v" id="k5"></div><div class="kpi-s" id="k5s"></div></div>
+    <div class="kpi"><div class="kpi-l">Varas</div><div class="kpi-v">84</div><div class="kpi-s">unidades judiciárias</div></div>
+    <div class="kpi"><div class="kpi-l">Classes</div><div class="kpi-v">134</div><div class="kpi-s">tipos processuais</div></div>
+    <div class="kpi"><div class="kpi-l">Pico Anual</div><div class="kpi-v" id="k8"></div><div class="kpi-s" id="k8s"></div></div>
+</section>
+
+<div class="tabs">
+    <button class="tab on" onclick="sw('t1',this)">Temporal</button>
+    <button class="tab" onclick="sw('t2',this)">Comarcas & Varas</button>
+    <button class="tab" onclick="sw('t3',this)">Classes & Assuntos</button>
+    <button class="tab" onclick="sw('t4',this)">Valores & Prioridade</button>
+    <button class="tab" onclick="sw('t5',this)">Litigantes</button>
+</div>
+
+<!-- TAB 1: TEMPORAL -->
+<div id="t1" class="tp on">
+    <section class="gr"><div class="ch fw"><h3>Evolução Anual — Processos Distribuídos × Valor (R$ mi)</h3><canvas id="c-yr" height="95"></canvas></div></section>
+    <section class="gr">
+        <div class="ch"><h3>Evolução Mensal (2015–2024)</h3><canvas id="c-mo"></canvas></div>
+        <div class="ch"><h3>Comarcas × Ano (Top 4)</h3><canvas id="c-cy"></canvas></div>
+    </section>
+    <section class="gr">
+        <div class="ch fw"><h3>Varas × Ano (Top 5)</h3><canvas id="c-vy" height="100"></canvas></div>
+    </section>
+</div>
+
+<!-- TAB 2: COMARCAS & VARAS -->
+<div id="t2" class="tp">
+    <section class="gr">
+        <div class="ch"><h3>Processos por Comarca (Top 20)</h3><canvas id="c-com"></canvas></div>
+        <div class="ch"><h3>Processos por Vara (Top 20)</h3><canvas id="c-var"></canvas></div>
+    </section>
+    <section class="gr">
+        <div class="tbl fw">
+            <h3 style="font-size:13px;font-weight:700;margin-bottom:12px">Detalhamento por Vara</h3>
+            <table id="tb-var"><thead><tr><th>#</th><th>Vara</th><th>Comarca</th><th>Processos</th><th>%</th><th></th></tr></thead><tbody></tbody></table>
+        </div>
+    </section>
+</div>
+
+<!-- TAB 3: CLASSES & ASSUNTOS -->
+<div id="t3" class="tp">
+    <section class="gr">
+        <div class="ch fw"><h3>Top 15 Classes Processuais</h3><canvas id="c-cls" height="130"></canvas></div>
+    </section>
+    <section class="gr">
+        <div class="ch fw"><h3>Top 15 Assuntos Principais</h3><canvas id="c-ass" height="130"></canvas></div>
+    </section>
+    <section class="gr">
+        <div class="ch"><h3>Competências</h3><canvas id="c-cmp"></canvas></div>
+        <div class="ch"><h3>Distribuição Autuação × Distribuição</h3><canvas id="c-dlt"></canvas></div>
+    </section>
+</div>
+
+<!-- TAB 4: VALORES & PRIORIDADE -->
+<div id="t4" class="tp">
+    <section class="gr c3">
+        <div class="ch"><h3>Faixas de Valor da Causa</h3><canvas id="c-fvl"></canvas></div>
+        <div class="ch"><h3>Pedido Liminar</h3><canvas id="c-lim"></canvas></div>
+        <div class="ch"><h3>Prioridade Processual</h3><canvas id="c-pri"></canvas></div>
+    </section>
+</div>
+
+<!-- TAB 5: LITIGANTES -->
+<div id="t5" class="tp">
+    <section class="gr">
+        <div class="ch"><h3>Top 15 Partes Autoras (Litigantes Frequentes)</h3><canvas id="c-aut" height="160"></canvas></div>
+        <div class="ch"><h3>Top 15 Partes Rés (Litigantes Frequentes)</h3><canvas id="c-reu" height="160"></canvas></div>
+    </section>
+</div>
+
+<footer class="ft">Dashboard gerado em <span id="gd"></span> &middot; Filtro: nome_magistrado = "RODRIGO DA SILVA PEREZ ARAUJO" &middot; Fonte: dados_processo.csv &middot; TJTO</footer>
+</div>
+
+<script>
+const D={"total":16252,"total_valor":2898604532,"media_valor":195931.09,"mediana_valor":16432.34,"com_prioridade":1731,"com_liminar":3181,"yearly":[{"ano":1994,"count":10,"valor":538523.83},{"ano":1995,"count":12,"valor":1177509.87},{"ano":1996,"count":14,"valor":1080365.82},{"ano":1997,"count":16,"valor":500696104.61},{"ano":1998,"count":8,"valor":197563.24},{"ano":1999,"count":19,"valor":530393.52},{"ano":2000,"count":21,"valor":577313.58},{"ano":2001,"count":34,"valor":2785947.14},{"ano":2002,"count":56,"valor":2400843.91},{"ano":2003,"count":32,"valor":3049589.97},{"ano":2004,"count":62,"valor":4321507.83},{"ano":2005,"count":150,"valor":8741662.67},{"ano":2006,"count":108,"valor":256261541.38},{"ano":2007,"count":170,"valor":9049644.25},{"ano":2008,"count":188,"valor":11714053.84},{"ano":2009,"count":219,"valor":48064829.13},{"ano":2010,"count":222,"valor":71877051.84},{"ano":2011,"count":332,"valor":20299420.78},{"ano":2012,"count":492,"valor":52694865.4},{"ano":2013,"count":561,"valor":98443480.93},{"ano":2014,"count":588,"valor":61814454.1},{"ano":2015,"count":652,"valor":69091787.48},{"ano":2016,"count":826,"valor":126222265.76},{"ano":2017,"count":1019,"valor":259699086.99},{"ano":2018,"count":1337,"valor":130355638.56},{"ano":2019,"count":2547,"valor":199857975.23},{"ano":2020,"count":2115,"valor":178953111.95},{"ano":2021,"count":3415,"valor":685463415.92},{"ano":2022,"count":918,"valor":92279940.26},{"ano":2023,"count":59,"valor":80732.93},{"ano":2024,"count":50,"valor":283909.28}],"monthly":[{"mes":"2015-01","count":49},{"mes":"2015-02","count":46},{"mes":"2015-03","count":59},{"mes":"2015-04","count":49},{"mes":"2015-05","count":61},{"mes":"2015-06","count":62},{"mes":"2015-07","count":65},{"mes":"2015-08","count":45},{"mes":"2015-09","count":48},{"mes":"2015-10","count":69},{"mes":"2015-11","count":53},{"mes":"2015-12","count":46},{"mes":"2016-01","count":57},{"mes":"2016-02","count":47},{"mes":"2016-03","count":60},{"mes":"2016-04","count":71},{"mes":"2016-05","count":63},{"mes":"2016-06","count":88},{"mes":"2016-07","count":80},{"mes":"2016-08","count":83},{"mes":"2016-09","count":93},{"mes":"2016-10","count":63},{"mes":"2016-11","count":73},{"mes":"2016-12","count":48},{"mes":"2017-01","count":71},{"mes":"2017-02","count":78},{"mes":"2017-03","count":85},{"mes":"2017-04","count":75},{"mes":"2017-05","count":96},{"mes":"2017-06","count":88},{"mes":"2017-07","count":88},{"mes":"2017-08","count":78},{"mes":"2017-09","count":77},{"mes":"2017-10","count":95},{"mes":"2017-11","count":119},{"mes":"2017-12","count":69},{"mes":"2018-01","count":94},{"mes":"2018-02","count":74},{"mes":"2018-03","count":99},{"mes":"2018-04","count":97},{"mes":"2018-05","count":88},{"mes":"2018-06","count":139},{"mes":"2018-07","count":118},{"mes":"2018-08","count":149},{"mes":"2018-09","count":116},{"mes":"2018-10","count":107},{"mes":"2018-11","count":105},{"mes":"2018-12","count":151},{"mes":"2019-01","count":195},{"mes":"2019-02","count":177},{"mes":"2019-03","count":201},{"mes":"2019-04","count":278},{"mes":"2019-05","count":248},{"mes":"2019-06","count":164},{"mes":"2019-07","count":211},{"mes":"2019-08","count":181},{"mes":"2019-09","count":273},{"mes":"2019-10","count":259},{"mes":"2019-11","count":152},{"mes":"2019-12","count":208},{"mes":"2020-01","count":145},{"mes":"2020-02","count":162},{"mes":"2020-03","count":223},{"mes":"2020-04","count":136},{"mes":"2020-05","count":138},{"mes":"2020-06","count":171},{"mes":"2020-07","count":188},{"mes":"2020-08","count":219},{"mes":"2020-09","count":207},{"mes":"2020-10","count":221},{"mes":"2020-11","count":136},{"mes":"2020-12","count":169},{"mes":"2021-01","count":163},{"mes":"2021-02","count":185},{"mes":"2021-03","count":270},{"mes":"2021-04","count":477},{"mes":"2021-05","count":337},{"mes":"2021-06","count":220},{"mes":"2021-07","count":356},{"mes":"2021-08","count":353},{"mes":"2021-09","count":292},{"mes":"2021-10","count":235},{"mes":"2021-11","count":253},{"mes":"2021-12","count":274},{"mes":"2022-01","count":275},{"mes":"2022-02","count":261},{"mes":"2022-03","count":51},{"mes":"2022-04","count":28},{"mes":"2022-05","count":63},{"mes":"2022-06","count":65},{"mes":"2022-07","count":51},{"mes":"2022-08","count":36},{"mes":"2022-09","count":44},{"mes":"2022-10","count":15},{"mes":"2022-11","count":24},{"mes":"2022-12","count":5}],"comarcas":[{"nome":"Palmas","count":9225},{"nome":"Goiatins","count":5093},{"nome":"Itacajá","count":1101},{"nome":"Justiça 4.0","count":481},{"nome":"Araguaína","count":111},{"nome":"Dianópolis","count":58},{"nome":"Taguatinga","count":41},{"nome":"Arraias","count":33},{"nome":"Paraíso do Tocantins","count":33},{"nome":"Paranã","count":27}],"varas":[{"nome":"1ª Escriv. Cível Goiatins","count":4715},{"nome":"7ª Vara Cível Palmas","count":3161},{"nome":"2ª Vara Cível Palmas","count":1293},{"nome":"1ª Escriv. Cível Itacajá","count":1077},{"nome":"1ª Vara Cível Palmas","count":1071},{"nome":"3ª Vara Cível Palmas","count":1063},{"nome":"4ª Vara Cível Palmas","count":815},{"nome":"5ª Vara Cível Palmas","count":772},{"nome":"6ª Vara Cível Palmas","count":492},{"nome":"1ª Escriv. Criminal Goiatins","count":378},{"nome":"1º Juizado Especial Palmas","count":367},{"nome":"Justiça 4.0 Previd. 3º Gab.","count":162},{"nome":"Justiça 4.0 Previd. 2º Gab.","count":157},{"nome":"Justiça 4.0 Previd. 1º Gab.","count":151},{"nome":"1ª Turma Recursal","count":50},{"nome":"CEJUSC","count":37},{"nome":"Violência contra Mulher","count":33},{"nome":"1ª Vara Crim. Araguaína","count":32},{"nome":"1ª Vara Crim. Taguatinga","count":32},{"nome":"1ª Vara Crim. Arraias","count":26}],"competencias":[{"nome":"CÍVEL","count":10808},{"nome":"JUIZADOS ESPECIAIS CÍVEIS","count":1431},{"nome":"CÍVEL / FAZENDA E REG. PÚBLICOS","count":1174},{"nome":"FAMÍLIA E SUCESSÕES","count":637},{"nome":"JUSTIÇA 4.0 PREVIDENCIÁRIO","count":470},{"nome":"JUIZADO / FAZENDA PÚBLICA","count":367},{"nome":"CRIMINAL","count":291},{"nome":"CÍVEL / ARBITRAGEM","count":189},{"nome":"VIOLÊNCIA DOMÉSTICA","count":161},{"nome":"EXECUÇÃO FISCAL","count":131},{"nome":"TURMAS RECURSAIS","count":130},{"nome":"JUIZADO INF. E JUVENTUDE","count":108}],"classes":[{"nome":"Cumprimento de Sentença","count":5092},{"nome":"Execução de Título Extrajudicial","count":4245},{"nome":"Procedimento Comum Cível","count":1983},{"nome":"Procedimento Juizado Esp. Cível","count":1100},{"nome":"Cumpr. Sentença c/ Fazenda Pública","count":1095},{"nome":"Embargos à Execução","count":254},{"nome":"Execução Fiscal","count":143},{"nome":"Inquérito Policial","count":137},{"nome":"Cumpr. Sentença - Lei Arbitral","count":135},{"nome":"Cumpr. Sentença - Alimentos","count":130},{"nome":"Recurso Inominado Cível","count":129},{"nome":"Ação Penal - Proc. Ordinário","count":124},{"nome":"Medidas Protetivas - Maria da Penha","count":105},{"nome":"Alimentos - Lei 5.478/68","count":103},{"nome":"Embargos de Terceiro Cível","count":102}],"assuntos":[{"nome":"Cédula de Crédito Bancário","count":965},{"nome":"Empréstimo Consignado","count":883},{"nome":"Contratos Bancários","count":781},{"nome":"Cheque","count":607},{"nome":"Mora","count":601},{"nome":"Tarifas","count":547},{"nome":"Despesas Condominiais","count":513},{"nome":"Cartão de Crédito","count":447},{"nome":"Duplicata","count":441},{"nome":"Salário-Maternidade","count":413},{"nome":"Seguro","count":339},{"nome":"Nota Promissória","count":283},{"nome":"Aposentadoria Rural","count":283},{"nome":"Alienação Fiduciária","count":263},{"nome":"Compra e Venda","count":257}],"faixas_valor":[{"faixa":"Até R$10k","count":5095},{"faixa":"R$10k-50k","count":6523},{"faixa":"R$50k-100k","count":1165},{"faixa":"R$100k-500k","count":1548},{"faixa":"R$500k-1M","count":216},{"faixa":"Acima R$1M","count":247}],"prioridade":[{"tipo":"Sem Prioridade","count":14521},{"tipo":"Com Prioridade","count":1731}],"liminar":[{"tipo":"Requerida","count":3181},{"tipo":"Não Requerida","count":13045},{"tipo":"Outro","count":26}],"top_autores":[{"nome":"BRADESCO EST UNIF","count":681},{"nome":"DIREÇÃO GERAL","count":415},{"nome":"POLÍCIA CIVIL/TO","count":350},{"nome":"MINISTÉRIO PÚBLICO/TO","count":292},{"nome":"BASA DIREÇÃO GERAL","count":191},{"nome":"KENERSON IND. E COM.","count":112},{"nome":"ESTADO DO TOCANTINS","count":104},{"nome":"COLÉGIO UPERIMM","count":87},{"nome":"SICOOB UNICENTRO BR","count":76},{"nome":"BRADESCO FINANCIAMENTOS","count":66},{"nome":"AG. FOMENTO DO TO","count":65},{"nome":"COND. ALPHAVILLE PALMAS 1","count":64},{"nome":"COND. MIRANTE DO LAGO","count":60},{"nome":"FAPTO","count":59},{"nome":"BANCO SANTANDER","count":46}],"top_reus":[{"nome":"BRADESCO EST UNIF","count":1237},{"nome":"INSS","count":1113},{"nome":"ESTADO DO TOCANTINS","count":390},{"nome":"DIREÇÃO GERAL","count":210},{"nome":"BRADESCO FINANCIAMENTOS","count":190},{"nome":"BANCO PAN","count":180},{"nome":"MUNICÍPIO DE GOIATINS","count":156},{"nome":"BANCO BMG","count":154},{"nome":"BANCO ITAÚ CONSIGNADO","count":122},{"nome":"BANCO CETELEM","count":116},{"nome":"ATS (SANEAMENTO)","count":106},{"nome":"UNIMED FEDERAÇÃO/TO","count":105},{"nome":"PREF. BARRA DO OURO","count":102},{"nome":"BRADESCO VIDA/PREVIDÊNCIA","count":94},{"nome":"ENERGISA TOCANTINS","count":83}],"delta_dist":[{"faixa":"Mesmo dia","count":14730},{"faixa":"1-7 dias","count":0},{"faixa":"8-30 dias","count":5},{"faixa":"31-90 dias","count":7},{"faixa":"91-365 dias","count":6},{"faixa":"Mais de 1 ano","count":1223}],"comarca_yearly":{"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":[{"comarca":"Palmas","data":[140,100,160,168,191,200,303,455,508,525,571,735,786,796,1013,960,1012,333,5,21]},{"comarca":"Goiatins","data":[8,7,9,20,26,15,22,25,49,57,72,72,212,457,1239,887,1702,183,0,0]},{"comarca":"Itacajá","data":[2,0,1,0,2,6,4,10,4,4,7,17,14,59,210,146,417,198,0,0]},{"comarca":"Justiça 4.0","data":[0,0,0,0,0,0,2,0,0,1,0,0,4,22,77,92,203,79,0,1]}]},"vara_yearly":{"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":[{"vara":"1ª Escriv. Cível Goiatins","data":[7,7,9,19,23,14,20,24,42,49,65,65,196,411,1181,834,1539,181,0,0]},{"vara":"7ª Vara Cível Palmas","data":[48,33,45,45,60,57,98,143,148,153,135,217,245,251,303,365,677,46,0,0]},{"vara":"2ª Vara Cível Palmas","data":[18,7,14,18,18,27,49,66,77,80,106,140,91,96,215,200,62,2,0,0]},{"vara":"1ª Escriv. Cível Itacajá","data":[2,0,1,0,2,6,4,10,3,4,7,17,14,59,208,146,398,196,0,0]},{"vara":"1ª Vara Cível Palmas","data":[39,22,29,25,39,34,44,79,85,77,95,100,77,71,81,83,55,1,0,0]}]}};
+
+const CL=['#2563eb','#f59e0b','#10b981','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16','#f97316','#6366f1','#14b8a6','#e11d48','#a855f7','#0ea5e9','#65a30d'];
+const fn=n=>n.toLocaleString('pt-BR');
+const fb=n=>{if(n>=1e9)return'R$ '+(n/1e9).toFixed(2).replace('.',',')+' bi';if(n>=1e6)return'R$ '+(n/1e6).toFixed(1).replace('.',',')+' mi';if(n>=1e3)return'R$ '+(n/1e3).toFixed(1).replace('.',',')+' mil';return'R$ '+n.toFixed(0)};
+const fp=(p,t)=>((p/t)*100).toFixed(1).replace('.',',')+' %';
+
+function sw(id,el){document.querySelectorAll('.tp').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));document.getElementById(id).classList.add('on');el.classList.add('on')}
+
+// KPIs
+document.getElementById('k1').textContent=fn(D.total);
+document.getElementById('k2').textContent=fb(D.total_valor);
+document.getElementById('k2s').textContent='Média: '+fb(D.media_valor);
+document.getElementById('k3').textContent=fb(D.mediana_valor);
+document.getElementById('k4').textContent=fn(D.com_prioridade);
+document.getElementById('k4s').textContent=fp(D.com_prioridade,D.total)+' do total';
+document.getElementById('k5').textContent=fn(D.com_liminar);
+document.getElementById('k5s').textContent=fp(D.com_liminar,D.total)+' do total';
+const pico=D.yearly.reduce((a,b)=>b.count>a.count?b:a);
+document.getElementById('k8').textContent=fn(pico.count);
+document.getElementById('k8s').textContent='em '+pico.ano;
+document.getElementById('gd').textContent=new Date().toLocaleDateString('pt-BR');
+
+Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+Chart.defaults.font.size=11;Chart.defaults.color='#6c757d';
+
+// ===== TAB 1: TEMPORAL =====
+new Chart(document.getElementById('c-yr'),{type:'bar',data:{labels:D.yearly.map(y=>y.ano),datasets:[{label:'Processos',data:D.yearly.map(y=>y.count),backgroundColor:CL[0]+'BB',borderRadius:3,order:2},{label:'Valor (R$ mi)',data:D.yearly.map(y=>+(y.valor/1e6).toFixed(1)),type:'line',borderColor:CL[1],backgroundColor:CL[1]+'20',borderWidth:2,tension:.3,pointRadius:2,yAxisID:'y1',order:1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:14}},tooltip:{callbacks:{label:c=>c.datasetIndex===0?'Processos: '+fn(c.parsed.y):'Valor: R$ '+c.parsed.y.toFixed(1)+' mi'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Processos'},grid:{color:'#f0f0f0'}},y1:{position:'right',beginAtZero:true,title:{display:true,text:'Valor (R$ mi)'},grid:{display:false}}}}});
+
+new Chart(document.getElementById('c-mo'),{type:'line',data:{labels:D.monthly.map(m=>{const[y,mo]=m.mes.split('-');return mo+'/'+y.slice(2)}),datasets:[{label:'Processos/mês',data:D.monthly.map(m=>m.count),borderColor:CL[0],backgroundColor:CL[0]+'12',borderWidth:1.5,fill:true,tension:.3,pointRadius:0,pointHoverRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:12}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+
+new Chart(document.getElementById('c-cy'),{type:'line',data:{labels:D.comarca_yearly.years,datasets:D.comarca_yearly.series.map((s,i)=>({label:s.comarca,data:s.data,borderColor:CL[i],borderWidth:2,tension:.3,fill:false,pointRadius:2,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:10,font:{size:10}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+
+new Chart(document.getElementById('c-vy'),{type:'line',data:{labels:D.vara_yearly.years,datasets:D.vara_yearly.series.map((s,i)=>({label:s.vara,data:s.data,borderColor:CL[i],borderWidth:2,tension:.3,fill:false,pointRadius:2,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:10,font:{size:10}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+
+// ===== TAB 2: COMARCAS & VARAS =====
+new Chart(document.getElementById('c-com'),{type:'bar',data:{labels:D.comarcas.map(c=>c.nome),datasets:[{data:D.comarcas.map(c=>c.count),backgroundColor:CL.map(c=>c+'BB'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' ('+fp(c.parsed.x,D.total)+')'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('c-var'),{type:'bar',data:{labels:D.varas.map(v=>v.nome),datasets:[{data:D.varas.map(v=>v.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+// Vara table
+(function(){const tb=document.querySelector('#tb-var tbody');const mx=D.varas[0].count;
+const comMap={"Goiatins":"Goiatins","Palmas":"Palmas","Itacajá":"Itacajá","Araguaína":"Araguaína","Taguatinga":"Taguatinga","Arraias":"Arraias","Justiça":"Justiça 4.0","CEJUSC":"Palmas","Turma":"Palmas","Violência":"Palmas"};
+D.varas.forEach((v,i)=>{const tr=document.createElement('tr');const w=Math.max(3,(v.count/mx)*180);
+let com='—';for(const[k,val] of Object.entries(comMap)){if(v.nome.includes(k)){com=val;break}}
+tr.innerHTML=`<td>${i+1}</td><td><strong>${v.nome}</strong></td><td>${com}</td><td>${fn(v.count)}</td><td>${fp(v.count,D.total)}</td><td><div class="bar-c"><div class="mb" style="width:${w}px;background:${CL[i%CL.length]}"></div></div></td>`;
+tb.appendChild(tr)})})();
+
+// ===== TAB 3: CLASSES & ASSUNTOS =====
+new Chart(document.getElementById('c-cls'),{type:'bar',data:{labels:D.classes.map(c=>c.nome),datasets:[{data:D.classes.map(c=>c.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' ('+fp(c.parsed.x,D.total)+')'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('c-ass'),{type:'bar',data:{labels:D.assuntos.map(a=>a.nome),datasets:[{data:D.assuntos.map(a=>a.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('c-cmp'),{type:'doughnut',data:{labels:D.competencias.map(c=>c.nome),datasets:[{data:D.competencias.map(c=>c.count),backgroundColor:CL.map(c=>c+'CC'),borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:6,font:{size:9}}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
+
+new Chart(document.getElementById('c-dlt'),{type:'bar',data:{labels:D.delta_dist.map(d=>d.faixa),datasets:[{data:D.delta_dist.map(d=>d.count),backgroundColor:[CL[2]+'CC',CL[0]+'CC',CL[1]+'CC',CL[4]+'CC',CL[3]+'CC',CL[5]+'CC'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+
+// ===== TAB 4: VALORES =====
+new Chart(document.getElementById('c-fvl'),{type:'bar',data:{labels:D.faixas_valor.map(f=>f.faixa),datasets:[{data:D.faixas_valor.map(f=>f.count),backgroundColor:[CL[2]+'CC',CL[0]+'CC',CL[1]+'CC',CL[4]+'CC',CL[3]+'CC',CL[5]+'CC'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+
+new Chart(document.getElementById('c-lim'),{type:'doughnut',data:{labels:D.liminar.map(l=>l.tipo),datasets:[{data:D.liminar.map(l=>l.count),backgroundColor:[CL[3]+'CC',CL[2]+'CC',CL[6]+'CC'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
+
+new Chart(document.getElementById('c-pri'),{type:'doughnut',data:{labels:D.prioridade.map(p=>p.tipo),datasets:[{data:D.prioridade.map(p=>p.count),backgroundColor:[CL[6]+'CC',CL[4]+'CC'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
+
+// ===== TAB 5: LITIGANTES =====
+new Chart(document.getElementById('c-aut'),{type:'bar',data:{labels:D.top_autores.map(a=>a.nome),datasets:[{data:D.top_autores.map(a=>a.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos como autor'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+new Chart(document.getElementById('c-reu'),{type:'bar',data:{labels:D.top_reus.map(r=>r.nome),datasets:[{data:D.top_reus.map(r=>r.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos como réu'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+</script>
+</body>
+</html>
