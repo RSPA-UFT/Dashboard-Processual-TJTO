@@ -1,206 +1,560 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Processual — Mag. Rodrigo Perez Araújo — TJTO</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
-    <style>
-:root{--bg:#f0f2f5;--card:#fff;--hdr:#1b2a4a;--hdr2:#243b6a;--tx1:#1a1a2e;--tx2:#6c757d;--txw:#fff;--ac:#2563eb;--c1:#2563eb;--c2:#f59e0b;--c3:#10b981;--c4:#ef4444;--c5:#8b5cf6;--c6:#ec4899;--c7:#06b6d4;--c8:#84cc16;--c9:#f97316;--c10:#6366f1;--gap:14px;--r:10px}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tx1);line-height:1.5}
-.wrap{max-width:1480px;margin:0 auto;padding:var(--gap)}
-.hdr{background:linear-gradient(135deg,var(--hdr),var(--hdr2));color:var(--txw);padding:22px 28px;border-radius:var(--r);margin-bottom:var(--gap);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 4px 14px rgba(27,42,74,.15)}
-.hdr h1{font-size:20px;font-weight:700;letter-spacing:-.3px}.hdr .sub{font-size:12px;opacity:.7;margin-top:3px}
-.badge{background:rgba(255,255,255,.12);padding:5px 14px;border-radius:18px;font-size:12px;font-weight:600}
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
-.kpi{background:var(--card);border-radius:var(--r);padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.06);border-left:4px solid var(--ac);transition:transform .15s}
-.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.kpi:nth-child(2){border-left-color:var(--c3)}.kpi:nth-child(3){border-left-color:var(--c2)}.kpi:nth-child(4){border-left-color:var(--c5)}.kpi:nth-child(5){border-left-color:var(--c4)}.kpi:nth-child(6){border-left-color:var(--c6)}.kpi:nth-child(7){border-left-color:var(--c7)}.kpi:nth-child(8){border-left-color:var(--c8)}
-.kpi-l{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-bottom:4px}
-.kpi-v{font-size:24px;font-weight:800}.kpi-s{font-size:11px;color:var(--tx2);margin-top:2px}
-.tabs{display:flex;gap:3px;margin-bottom:var(--gap);background:var(--card);padding:5px;border-radius:var(--r);box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap}
-.tab{padding:7px 16px;border:none;background:0 0;border-radius:6px;font-size:12px;font-weight:700;color:var(--tx2);cursor:pointer;transition:all .15s}
-.tab:hover{background:var(--bg);color:var(--tx1)}.tab.on{background:var(--ac);color:#fff}
-.tp{display:none}.tp.on{display:block}
-.gr{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-bottom:var(--gap)}
-.gr.c3{grid-template-columns:repeat(3,1fr)}
-.ch{background:var(--card);border-radius:var(--r);padding:18px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.ch.fw{grid-column:1/-1}
-.ch h3{font-size:13px;font-weight:700;margin-bottom:14px;color:var(--tx1)}
-.ch canvas{max-height:310px}
-.tbl{background:var(--card);border-radius:var(--r);padding:18px 22px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow-x:auto;margin-bottom:var(--gap)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-thead th{text-align:left;padding:8px 12px;border-bottom:2px solid #e2e8f0;color:var(--tx2);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
-tbody td{padding:8px 12px;border-bottom:1px solid #f1f5f9}
-tbody tr:hover{background:#f8fafc}
-.bar-c{display:flex;align-items:center;gap:6px}
-.mb{height:7px;border-radius:4px;min-width:3px}
-.ft{text-align:center;padding:14px;font-size:11px;color:var(--tx2)}
-@media(max-width:900px){.gr,.gr.c3{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.kpi-row{grid-template-columns:1fr}.hdr{flex-direction:column;align-items:flex-start}}
-@media print{body{background:#fff}.kpi,.ch,.tbl{box-shadow:none;border:1px solid #e2e8f0}.ch{break-inside:avoid}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AED Histórica — Comarca de Dianópolis/TO</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --navy:#1B3A6B; --blue:#2563EB; --lblue:#3B82F6; --sky:#7DD3FC;
+    --teal:#0D9488; --lteal:#5EEAD4; --indigo:#4F46E5; --violet:#7C3AED;
+    --amber:#D97706; --green:#059669; --red:#DC2626; --gray:#9CA3AF;
+    --orange:#EA580C; --pink:#DB2777;
+    --bg:#F0F4FA; --card:#FFFFFF; --border:#E2E8F0; --text:#1E293B; --muted:#64748B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+  .header{background:linear-gradient(135deg,var(--navy) 0%,#2a4f8a 100%);color:#fff;padding:28px 36px 24px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.3px}
+  .header .sub{font-size:13px;color:#c9d8f0;margin-top:6px;line-height:1.6}
+  .header .meta{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap}
+  .header .meta span{font-size:12px;background:rgba(255,255,255,.12);border-radius:5px;padding:4px 10px;color:#dae6ff}
+  .sec-banner{margin:24px 16px 0;border-radius:8px 8px 0 0;padding:10px 20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;display:flex;align-items:center;gap:10px;color:#fff}
+  .sec-banner.b1{background:#1e4080}.sec-banner.b2{background:#0D6B62}.sec-banner.b3{background:#3730a3}
+  .sec-banner.b4{background:#92400e}.sec-banner.b5{background:#065f46}.sec-banner.b6{background:#991b1b}
+  .sec-banner .dot{width:8px;height:8px;background:#fff;border-radius:50%;opacity:.8}
+  .sec-note{margin:0 16px;background:#fff;border-left:4px solid var(--navy);padding:8px 16px;font-size:11.5px;color:var(--muted);line-height:1.6}
+  .sec-note strong{color:var(--text)}
+  .grid{display:grid;gap:16px;padding:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+  .g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+  @media(max-width:1100px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+  .kpi{background:var(--card);border-radius:10px;padding:16px 20px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .kpi .lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
+  .kpi .val{font-size:26px;font-weight:800;color:var(--navy);line-height:1}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:5px}
+  .kpi.a1{border-left:4px solid var(--blue)}.kpi.a2{border-left:4px solid var(--teal)}
+  .kpi.a3{border-left:4px solid var(--indigo)}.kpi.a4{border-left:4px solid var(--amber)}.kpi.a5{border-left:4px solid var(--green)}
+  .card{background:var(--card);border-radius:10px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden}
+  .ch{padding:14px 18px 0}
+  .ct{font-size:14px;font-weight:700;color:var(--navy)}
+  .cs{font-size:11px;font-weight:600;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:5px}
+  .tag{display:inline-block;padding:1px 7px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .tq{background:#dbeafe;color:#1d4ed8}.te{background:#d1fae5;color:#065f46}
+  .tc{background:#fef3c7;color:#92400e}.tf{background:#ede9fe;color:#5b21b6}
+  .cb{padding:12px 18px}
+  .cap{margin:8px 18px 14px;padding:9px 13px;background:#F8FAFC;border-left:3px solid var(--lblue);border-radius:0 5px 5px 0;font-size:11.5px;color:var(--muted);line-height:1.6}
+  .cap strong{color:var(--text)}.cap .w{color:#B45309}
+  .dp{display:grid;grid-template-columns:1fr 1px 1fr}
+  .dvv{width:1px;background:var(--border);margin:8px 0}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 14px}
+  .pill{font-size:11px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:20px;padding:4px 12px;color:#1D4ED8;font-weight:500}
+  .pill.g{background:#ECFDF5;border-color:#6EE7B7;color:#065F46}
+  .pill.a{background:#FFFBEB;border-color:#FCD34D;color:#92400E}
+  .pill.r{background:#FEF2F2;border-color:#FCA5A5;color:#991B1B}
+  .stb{width:100%;border-collapse:collapse;font-size:12px}
+  .stb td{padding:6px 8px;border-bottom:1px solid var(--border)}
+  .stb td:first-child{color:var(--muted);font-weight:600}
+  .stb td:last-child{font-weight:700;color:var(--navy);text-align:right}
+  .stb tr:last-child td{border-bottom:none}
+  .footer{background:var(--navy);color:#9BB5DA;text-align:center;padding:18px;font-size:11.5px;margin-top:32px;line-height:1.8}
+</style>
 </head>
 <body>
-<div class="wrap">
-<header class="hdr">
-    <div><h1>Dashboard Processual — TJTO</h1><div class="sub">Magistrado: Rodrigo da Silva Perez Araújo &middot; 11/05/1994 – 05/09/2024</div></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <span class="badge">16.252 processos</span>
-        <span class="badge">27 comarcas</span>
-        <span class="badge">84 varas</span>
-    </div>
-</header>
 
-<section class="kpi-row">
-    <div class="kpi"><div class="kpi-l">Processos</div><div class="kpi-v" id="k1"></div><div class="kpi-s">14 anos de atuação até então</div></div>
-    <div class="kpi"><div class="kpi-l">Valor Total</div><div class="kpi-v" id="k2"></div><div class="kpi-s" id="k2s"></div></div>
-    <div class="kpi"><div class="kpi-l">Valor Mediano</div><div class="kpi-v" id="k3"></div><div class="kpi-s">por processo</div></div>
-    <div class="kpi"><div class="kpi-l">Com Prioridade</div><div class="kpi-v" id="k4"></div><div class="kpi-s" id="k4s"></div></div>
-    <div class="kpi"><div class="kpi-l">Liminares</div><div class="kpi-v" id="k5"></div><div class="kpi-s" id="k5s"></div></div>
-    <div class="kpi"><div class="kpi-l">Varas</div><div class="kpi-v">84</div><div class="kpi-s">unidades judiciárias</div></div>
-    <div class="kpi"><div class="kpi-l">Classes</div><div class="kpi-v">134</div><div class="kpi-s">tipos processuais</div></div>
-    <div class="kpi"><div class="kpi-l">Pico Anual</div><div class="kpi-v" id="k8"></div><div class="kpi-s" id="k8s"></div></div>
-</section>
-
-<div class="tabs">
-    <button class="tab on" onclick="sw('t1',this)">Temporal</button>
-    <button class="tab" onclick="sw('t2',this)">Comarcas & Varas</button>
-    <button class="tab" onclick="sw('t3',this)">Classes & Assuntos</button>
-    <button class="tab" onclick="sw('t4',this)">Valores & Prioridade</button>
-    <button class="tab" onclick="sw('t5',this)">Litigantes</button>
+<div class="header">
+  <h1>📊 Análise Exploratória de Dados Processuais — Comarca de Dianópolis/TO</h1>
+  <div class="sub">AED Histórica Integrada · Responsável: <strong>Rodrigo Perez Araújo, Juiz de Direito Diretor do Foro</strong></div>
+  <div class="meta">
+    <span>📅 26/02/2026</span>
+    <span>🗂 Fontes: eProc · QLIK · CSVs históricos</span>
+    <span>📦 ~12 milhões de registros</span>
+    <span>📆 Cobertura: 1994–2024</span>
+    <span>⚖️ Sistema: eProc (TJTO)</span>
+  </div>
 </div>
 
-<!-- TAB 1: TEMPORAL -->
-<div id="t1" class="tp on">
-    <section class="gr"><div class="ch fw"><h3>Evolução Anual — Processos Distribuídos × Valor (R$ mi)</h3><canvas id="c-yr" height="95"></canvas></div></section>
-    <section class="gr">
-        <div class="ch"><h3>Evolução Mensal (2015–2024)</h3><canvas id="c-mo"></canvas></div>
-        <div class="ch"><h3>Comarcas × Ano (Top 4)</h3><canvas id="c-cy"></canvas></div>
-    </section>
-    <section class="gr">
-        <div class="ch fw"><h3>Varas × Ano (Top 5)</h3><canvas id="c-vy" height="100"></canvas></div>
-    </section>
+<!-- KPIs -->
+<div class="grid g5" style="padding:16px 16px 4px">
+  <div class="kpi a1"><div class="lbl">Processos — Carreira</div><div class="val">16.840</div><div class="sub">Acervo histórico completo (eProc/CSV)</div></div>
+  <div class="kpi a2"><div class="lbl">Minutas Produzidas</div><div class="val">145.989</div><div class="sub">Período 2020–2024 (eProc)</div></div>
+  <div class="kpi a3"><div class="lbl">Valor Total das Causas</div><div class="val">R$ 2,9 bi</div><div class="sub">Mediana: R$ 13.623 (eProc/CSV)</div></div>
+  <div class="kpi a4"><div class="lbl">Acervo Ativo DNO</div><div class="val">7.928</div><div class="sub">Vara Cível/Fazenda — Dianópolis (QLIK)</div></div>
+  <div class="kpi a5"><div class="lbl">Movimentos Analisados</div><div class="val">2 milhões</div><div class="sub">Amostra de 5,5 mi registros (eProc)</div></div>
 </div>
 
-<!-- TAB 2: COMARCAS & VARAS -->
-<div id="t2" class="tp">
-    <section class="gr">
-        <div class="ch"><h3>Processos por Comarca (Top 20)</h3><canvas id="c-com"></canvas></div>
-        <div class="ch"><h3>Processos por Vara (Top 20)</h3><canvas id="c-var"></canvas></div>
-    </section>
-    <section class="gr">
-        <div class="tbl fw">
-            <h3 style="font-size:13px;font-weight:700;margin-bottom:12px">Detalhamento por Vara</h3>
-            <table id="tb-var"><thead><tr><th>#</th><th>Vara</th><th>Comarca</th><th>Processos</th><th>%</th><th></th></tr></thead><tbody></tbody></table>
+<!-- ── SECTION 1: ACERVO DIANÓPOLIS ── -->
+<div class="sec-banner b1"><span class="dot"></span>ACERVO ATIVO — Vara Cível, Fazenda e Registros Públicos de Dianópolis · Fonte: QLIK (25 planilhas, ~60.000 registros)</div>
+<div class="sec-note"><strong>Escopo:</strong> Dados exclusivos da Vara Cível/Fazenda de Dianópolis/TO. O QLIK registra a <strong>data de distribuição</strong> (atribuição ao juízo), não a data de autuação (protocolo inicial). Total: <strong>7.928 processos ativos</strong> — 6.229 com origem em Dianópolis e 1.629 em Almas.</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="ch"><div class="ct">Processos Distribuídos por Ano</div><div class="cs"><span class="tag tq">QLIK</span> Dianópolis · Data de Distribuição · 2007–2026</div></div>
+    <div class="cb"><div style="position:relative;height:240px"><canvas id="cDA"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Cada barra = processos <em>distribuídos ao juízo</em> naquele ano (data de atribuição, não de protocolo). Pico em <strong>2018 (639)</strong>, queda até 2023 (276) e recuperação em 2024–2025. <span class="w">⚠ 2026 parcial</span> — dados apenas jan–fev.</div>
+    <div class="pills"><span class="pill">Pico: 2018 (639)</span><span class="pill a">Mínimo: 2023 (276)</span><span class="pill g">Recuperação: 2025 (443)</span></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">Sazonalidade Mensal das Distribuições</div><div class="cs"><span class="tag tq">QLIK</span> Dianópolis · Acumulado histórico por mês do ano</div></div>
+    <div class="cb"><div style="position:relative;height:240px"><canvas id="cMes"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Volume total distribuído por mês, acumulando todos os anos. Revela o <strong>padrão sazonal forense</strong>: menor em dezembro (recesso) e concentração de abril a setembro. Padrão compatível com calendário forense nacional.</div>
+    <div class="pills"><span class="pill g">Maior: Abr (1.493)</span><span class="pill a">Menor: Dez (1.247)</span></div>
+  </div>
+</div>
+
+<!-- Classes + Assuntos FUSED -->
+<div class="grid">
+  <div class="card">
+    <div class="ch"><div class="ct">Classes e Assuntos Processuais — Painel Consolidado</div><div class="cs"><span class="tag tq">QLIK</span><span class="tag tf">FUSÃO</span> Dianópolis · Top 15 Assuntos (esq.) e Top 15 Classes (dir.)</div></div>
+    <div class="cb" style="padding-bottom:0">
+      <div class="dp">
+        <div style="padding-right:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Top 15 Assuntos Distribuídos</div>
+          <div style="position:relative;height:380px"><canvas id="cAss"></canvas></div>
         </div>
-    </section>
+        <div class="dvv"></div>
+        <div style="padding-left:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Top 15 Classes Processuais</div>
+          <div style="position:relative;height:380px"><canvas id="cCls"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="cap"><strong>Assuntos:</strong> Alienação Fiduciária (543), Cédula de Crédito Bancário (368) e Aposentadoria Rural (285) lideram — perfil econômico regional: crédito, financiamentos e previdenciário. <strong>Classes:</strong> Procedimento Comum (2.415) lidera, seguido de Cumprimento de Sentença (1.065) e Execução (864). <strong>~41% do acervo em fase executiva</strong>, indicando alto índice de títulos já constituídos aguardando cumprimento.</div>
+    <div class="pills"><span class="pill r">~41% em fase executiva</span><span class="pill a">Crédito rural e bancário dominam</span><span class="pill g">Previdenciário relevante</span></div>
+  </div>
 </div>
 
-<!-- TAB 3: CLASSES & ASSUNTOS -->
-<div id="t3" class="tp">
-    <section class="gr">
-        <div class="ch fw"><h3>Top 15 Classes Processuais</h3><canvas id="c-cls" height="130"></canvas></div>
-    </section>
-    <section class="gr">
-        <div class="ch fw"><h3>Top 15 Assuntos Principais</h3><canvas id="c-ass" height="130"></canvas></div>
-    </section>
-    <section class="gr">
-        <div class="ch"><h3>Competências</h3><canvas id="c-cmp"></canvas></div>
-        <div class="ch"><h3>Distribuição Autuação × Distribuição</h3><canvas id="c-dlt"></canvas></div>
-    </section>
+<!-- ── SECTION 2: VALOR DA CAUSA ── -->
+<div class="sec-banner b2" style="margin-top:20px"><span class="dot"></span>ANÁLISE ECONÔMICA — Valor da Causa · Fonte: eProc / CSV (dados_processo.csv · carreira completa)</div>
+<div class="sec-note"><strong>Escopo:</strong> Dataset da carreira completa do magistrado (16.840 processos, todas as comarcas). Distribuição de valor <strong>não-normal</strong> (Shapiro-Wilk p≈0, skewness=83,26) — a mediana (R$ 13.623) é o indicador central correto para comparações.</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="ch"><div class="ct">Distribuição por Faixas de Valor da Causa</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · 16.840 processos</div></div>
+    <div class="cb"><div style="position:relative;height:260px"><canvas id="cFx"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Proporção de processos por faixa de valor atribuído na autuação. <strong>75% abaixo de R$ 36.257</strong> — perfil de vara de interior com execuções de baixo valor individual. Faixa acima de R$ 500k (2,9%) distorce a média para R$ 178k, tornando a mediana (R$ 13.623) o indicador de referência.</div>
+    <div class="pills"><span class="pill g">75% abaixo de R$ 36k</span><span class="pill a">Média (R$178k) 13× maior que mediana</span><span class="pill r">2,9% acima de R$500k distorce média</span></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">Estatísticas Descritivas — Valor da Causa</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · Análise univariada</div></div>
+    <div class="cb" style="padding-top:16px">
+      <table class="stb">
+        <tr><td>Média aritmética</td><td>R$ 178.353,71</td></tr>
+        <tr><td>⭐ Mediana (P50)</td><td>R$ 13.623,22</td></tr>
+        <tr><td>1º Quartil (P25)</td><td>R$ 4.180,00</td></tr>
+        <tr><td>3º Quartil (P75)</td><td>R$ 36.257,23</td></tr>
+        <tr><td>Percentil 95</td><td>R$ 266.232,47</td></tr>
+        <tr><td>Máximo</td><td>R$ 500.000.000,00</td></tr>
+        <tr><td>Desvio-padrão</td><td>R$ 4.760.161,51</td></tr>
+        <tr><td>Assimetria (skewness)</td><td>83,26 → cauda direita extrema</td></tr>
+        <tr><td>Curtose</td><td>8.006,96 → leptocúrtica</td></tr>
+        <tr><td>Shapiro-Wilk p-valor</td><td>≈ 0 → rejeita normalidade</td></tr>
+      </table>
+    </div>
+    <div class="cap"><strong>Interpretação:</strong> Divergência extrema média/mediana confirma concentração em poucos processos de alto valor. <strong>Toda comparação entre grupos exige testes não-paramétricos</strong> (Wilcoxon / Mann-Whitney / Kruskal-Wallis) com reporte de medianas.</div>
+  </div>
 </div>
 
-<!-- TAB 4: VALORES & PRIORIDADE -->
-<div id="t4" class="tp">
-    <section class="gr c3">
-        <div class="ch"><h3>Faixas de Valor da Causa</h3><canvas id="c-fvl"></canvas></div>
-        <div class="ch"><h3>Pedido Liminar</h3><canvas id="c-lim"></canvas></div>
-        <div class="ch"><h3>Prioridade Processual</h3><canvas id="c-pri"></canvas></div>
-    </section>
+<!-- ── SECTION 3: PRODUTIVIDADE ── -->
+<div class="sec-banner b3" style="margin-top:20px"><span class="dot"></span>PRODUTIVIDADE JURISDICIONAL — eProc · 2020–2024 (145.989 minutas produzidas)</div>
+<div class="sec-note"><strong>Escopo:</strong> Minutas digitais assinadas no <strong>eProc (TJTO)</strong> pelo magistrado, 2020–2024. "Minuta" = ato decisório assinado eletronicamente (sentença, decisão, despacho). <strong>Não confundir com processos distribuídos</strong> — um processo pode gerar múltiplas minutas ao longo do tempo.</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="ch"><div class="ct">Produção de Minutas por Ano e Tipo (Gráfico Empilhado)</div><div class="cs"><span class="tag te">eProc</span><span class="tag tf">FUSÃO</span> Carreira · 2020–2024 · Volume total + composição por tipo</div></div>
+    <div class="cb"><div style="position:relative;height:260px"><canvas id="cMF"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Barras empilhadas = total de minutas por ano, coloridas por tipo de ato. <strong>Decisão/Despacho</strong> (azul, 84%) são atos de impulso processual; <strong>Sentenças</strong> (verde, 13%) são resoluções definitivas. Pico em <strong>2022 (36.966)</strong> = recuperação pós-pandemia. Queda de 36% (2022→2024) acompanha redução nas distribuições.</div>
+    <div class="pills"><span class="pill">Pico: 2022 (36.966 minutas)</span><span class="pill r">Queda: −36% (2022→2024)</span><span class="pill g">19.175 sentenças em 5 anos</span></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">Composição das Minutas por Tipo de Ato</div><div class="cs"><span class="tag te">eProc</span> Carreira completa · Total: 145.989 minutas</div></div>
+    <div class="cb"><div style="position:relative;height:260px"><canvas id="cMT"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Proporção de cada tipo no acervo total (2020–2024). <strong>Decisão/Despacho (84,3%)</strong> reflete o volume de atos de impulso; <strong>Sentença (13,1%)</strong> são resoluções definitivas. Proporção sentença/total alinha-se ao padrão CNJ para varas cíveis com perfil de execução.</div>
+    <div class="pills"><span class="pill">Decisão/Despacho: 84,3%</span><span class="pill g">Sentenças: 13,1%</span><span class="pill a">Despacho simples: 1,5%</span></div>
+  </div>
 </div>
 
-<!-- TAB 5: LITIGANTES -->
-<div id="t5" class="tp">
-    <section class="gr">
-        <div class="ch"><h3>Top 15 Partes Autoras (Litigantes Frequentes)</h3><canvas id="c-aut" height="160"></canvas></div>
-        <div class="ch"><h3>Top 15 Partes Rés (Litigantes Frequentes)</h3><canvas id="c-reu" height="160"></canvas></div>
-    </section>
+<!-- ── SECTION 4: TRAJETÓRIA ── -->
+<div class="sec-banner b5" style="margin-top:20px"><span class="dot"></span>TRAJETÓRIA DO MAGISTRADO — eProc · Carreira Completa por Comarca (2009–2024)</div>
+<div class="sec-note"><strong>Escopo:</strong> <code>dados_processo.csv</code> abrange a <strong>carreira integral do magistrado</strong> em todas as comarcas: Palmas (9.225), Goiatins (5.093), Itacajá (1.101), Dianópolis (58) e outras. <strong>Não é exclusivo de Dianópolis.</strong> Campo utilizado: <strong>data de autuação</strong> (protocolo inicial), que difere da data de distribuição usada no QLIK.</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="ch"><div class="ct">Processos Autuados por Ano e Comarca (Trajetória Empilhada)</div><div class="cs"><span class="tag tc">CSV</span><span class="tag tf">FUSÃO</span> Carreira completa · Data de Autuação · 2009–2024</div></div>
+    <div class="cb"><div style="position:relative;height:280px"><canvas id="cTraj"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Barras empilhadas = total de autuações por ano, coloridas por comarca de atuação. Revela a <strong>trajetória geográfica da carreira</strong>: início em <strong>Palmas</strong> (predominante 2009–2021), passagem por <strong>Goiatins</strong> (pico 2021: 1.702) e <strong>Itacajá</strong> (pico 2021: 417), chegada em <strong>Dianópolis</strong> a partir de 2022. Zeros em 2023/2024 para Palmas/Goiatins/Itacajá refletem saída daquelas comarcas.</div>
+    <div class="pills"><span class="pill">Palmas: maior volume total (9.225)</span><span class="pill a">Goiatins: pico em 2021 (1.702)</span><span class="pill g">Dianópolis: crescimento desde 2022</span></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">Competências do Acervo</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · Distribuição por área</div></div>
+    <div class="cb"><div style="position:relative;height:280px"><canvas id="cComp"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Proporção do acervo histórico por competência. <strong>CÍVEL (64,2%)</strong> domina. Presença de Família e Sucessões (3,8%) e Criminal (1,8%) reflete períodos de vara de competência acumulada — comum em comarcas menores do interior do Tocantins.</div>
+    <div class="pills"><span class="pill">Cível: 64,2%</span><span class="pill a">JEC: 8,5%</span><span class="pill g">Fazenda Pública: ~10,3%</span></div>
+  </div>
 </div>
 
-<footer class="ft">Dashboard gerado em <span id="gd"></span> &middot; Filtro: nome_magistrado = "RODRIGO DA SILVA PEREZ ARAUJO" &middot; Fonte: dados_processo.csv &middot; TJTO</footer>
+<!-- ── SECTION 5: URGÊNCIA FUSED ── -->
+<div class="sec-banner b4" style="margin-top:20px"><span class="dot"></span>INDICADORES DE URGÊNCIA E PRIORIDADE — eProc / CSV · Carreira completa</div>
+<div class="sec-note"><strong>Escopo:</strong> Campos "Prioridade" e "Pedido Liminar" do dataset da carreira completa (16.840 processos). <strong>Prioridade</strong> = tratamento preferencial por lei (idosos, portadores de doença grave). <strong>Liminar</strong> = requerimento de tutela de urgência/cautelar no momento da distribuição.</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="ch"><div class="ct">Prioridade e Pedido de Liminar — Painel Consolidado</div><div class="cs"><span class="tag tc">CSV</span><span class="tag tf">FUSÃO</span> Carreira completa · 16.840 processos</div></div>
+    <div class="cb" style="padding-bottom:0">
+      <div class="dp">
+        <div style="padding-right:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Prioridade Processual</div>
+          <div style="position:relative;height:200px"><canvas id="cPrio"></canvas></div>
+        </div>
+        <div class="dvv"></div>
+        <div style="padding-left:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Status do Pedido Liminar</div>
+          <div style="position:relative;height:200px"><canvas id="cLim"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="cap"><strong>Prioridade:</strong> 10,3% do acervo (1.731 processos) com tratamento preferencial — percentual compatível com perfil previdenciário da comarca. <strong>Liminar:</strong> 3.181 processos (18,9%) com pedido registrado. Apenas 16 registradas como deferidas (0,5%) — <span class="w"><strong>provável desatualização cadastral</strong></span>: o campo raramente é atualizado após decisão nos autos, não indica ausência de deferimentos.</div>
+    <div class="pills"><span class="pill g">10,3% com prioridade legal</span><span class="pill a">18,9% com pedido de liminar</span><span class="pill r">Apenas 16 liminares como deferidas — verificar atualização cadastral</span></div>
+  </div>
+</div>
+
+<!-- ── SECTION 6: OPERACIONAL FUSED ── -->
+<div class="sec-banner b6" style="margin-top:20px"><span class="dot"></span>PAINEL OPERACIONAL — Movimentos e Localizadores · eProc · Amostra: 2 milhões de registros</div>
+<div class="sec-note"><strong>Escopo:</strong> Análise sobre <strong>amostra de 2 milhões de registros</strong> de <code>historico_movimento.csv</code> (total: 5,5 mi) e <code>historico_localizadores.csv</code> (total: 6,3 mi). <strong>Localizador</strong> = fila/caixa virtual de trabalho no eProc. <strong>Movimento</strong> = evento de tramitação registrado no sistema.</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="ch"><div class="ct">Top 10 Movimentos e Top 10 Localizadores — Painel Operacional</div><div class="cs"><span class="tag te">eProc</span><span class="tag tf">FUSÃO</span> Amostra: 2M registros · Movimentos (esq.) e Localizadores/Filas (dir.)</div></div>
+    <div class="cb" style="padding-bottom:0">
+      <div class="dp">
+        <div style="padding-right:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Top 10 Movimentos Processuais</div>
+          <div style="position:relative;height:320px"><canvas id="cMov"></canvas></div>
+        </div>
+        <div class="dvv"></div>
+        <div style="padding-left:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">Top 10 Localizadores (Filas eProc)</div>
+          <div style="position:relative;height:320px"><canvas id="cLoc"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="cap"><strong>Movimentos:</strong> "Protocolizada Petição" (321k) e ciclo de intimações eletrônicas (243k + 235k) = eventos dominantes, indicando alto volume de interação partes–cartório. "Conclusão para despacho" (81k) = demanda direta sobre o magistrado. <br><strong>Localizadores:</strong> <span class="w"><strong>⚠ Alerta: "G- CONCLUSOS +70 DIAS" concentra 478.955 entradas</strong></span> — maior localizador individual, indica acervo relevante sem decisão há mais de 70 dias. Filas "URGENTE" (5 servidores nomeados) somam ~368k registros — concentração de carga em servidores específicos representa risco operacional.</div>
+    <div class="pills"><span class="pill r">ALERTA: CONCLUSOS +70 DIAS = 478.955 entradas</span><span class="pill a">Filas URGENTE: ~368k em 5 servidores</span><span class="pill">Ciclo de intimações eletrônicas consolidado</span></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="ch"><div class="ct">Volume de Movimentos Processuais por Ano</div><div class="cs"><span class="tag te">eProc</span> Amostra: 2M registros · Evolução anual da atividade cartorária (2015–2024)</div></div>
+    <div class="cb"><div style="position:relative;height:220px"><canvas id="cMA"></canvas></div></div>
+    <div class="cap"><strong>Como ler:</strong> Total de eventos de tramitação por ano na amostra de 2M registros. Crescimento de 2015 (19.961) a 2023 (478.107) reflete <strong>digitalização progressiva dos autos</strong> e aumento do volume processual. Redução em 2024 (342.799) pode indicar início de redução do acervo ou coleta parcial (até set/2024). <span class="w">⚠ Valores são proporcionais à amostra — totais reais são maiores.</span></div>
+    <div class="pills"><span class="pill g">Crescimento 2015→2023: +2.295%</span><span class="pill">Digitalização acelerou registro de movimentos</span><span class="pill a">2024 parcial (até set/2024)</span></div>
+  </div>
+</div>
+
+
+<div class="sec-banner" style="background:#581c87;margin-top:20px"><span class="dot"></span>PAINEL COMPARATIVO — ENTRADA vs. PRODUCAO JURISDICIONAL · QLIK x eProc · 2020–2024</div>
+<div class="card">
+  <div class="ch">
+    <div class="ct">Distribuicao de Processos vs. Minutas Produzidas — Entrada x Saida (2020–2024)</div>
+    <div class="cs"><span class="tag tq">QLIK</span><span class="tag te">eProc</span><span class="tag tf">FUSAO</span> Sobreposicao temporal das duas fontes · 5 anos comparaveis</div>
+  </div>
+  <div class="dp">
+    <div><div class="ct" style="font-size:11px;color:#64748b;padding:6px 0 4px">Entrada (distrib.) vs. Saida (minutas) — Duplo Eixo</div>
+      <div style="position:relative;height:280px"><canvas id="cComp1"></canvas></div></div>
+    <div style="width:1px;background:#e2e8f0"></div>
+    <div><div class="ct" style="font-size:11px;color:#64748b;padding:6px 0 4px">Indice de Resposta Processual (minutas / processo distribuido)</div>
+      <div style="position:relative;height:280px"><canvas id="cComp2"></canvas></div></div>
+  </div>
+  <div class="cap">
+    <strong>Como ler (esq.):</strong> As barras (eixo esquerdo) representam as minutas produzidas no eProc a cada ano; a linha tracejada laranja (eixo direito) indica os processos distribuidos ainda presentes no acervo ativo do QLIK. Escalas intencionalmente distintas — minutas sao atos judiciais individuais; distribuicao e o numero de processos novos. <strong>Como ler (dir.):</strong> O Indice de Resposta Processual calcula quantas minutas foram produzidas para cada processo distribuido naquele ano. O pico em 2023 (106,5) indica o ano de maior produtividade relativa; a queda em 2024 (75,5) pode refletir reducao da demanda ou dado parcial. <strong>Atencao ao escopo:</strong> Minutas = eProc (Dianopolis, 2020–2024); Distribuidos = apenas acervo ativo remanescente no QLIK (processos extintos nao aparecem, gerando subcontagem nos anos mais antigos).
+  </div>
+  <div class="pills">
+    <span class="pill" style="background:#581c87">Pico de resposta: 2023 — 106,5 minutas/processo</span>
+    <span class="pill" style="background:#065f46">2022 maior volume absoluto: 36.966 minutas</span>
+    <span class="pill" style="background:#92400e">Queda de distribuicao 2020→2023: -47,3%</span>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Rodrigo Perez Araújo</strong> — Juiz de Direito Diretor do Foro · Comarca de Dianópolis/TO<br>
+  Análise Exploratória de Dados Processuais · eProc (TJTO) · QLIK · 26 de fevereiro de 2026<br>
+  Fontes: eProc, QLIK, CSVs históricos (~12 milhões de registros) · Análise não substitui auditoria de dados oficial
 </div>
 
 <script>
-const D={"total":16252,"total_valor":2898604532,"media_valor":195931.09,"mediana_valor":16432.34,"com_prioridade":1731,"com_liminar":3181,"yearly":[{"ano":1994,"count":10,"valor":538523.83},{"ano":1995,"count":12,"valor":1177509.87},{"ano":1996,"count":14,"valor":1080365.82},{"ano":1997,"count":16,"valor":500696104.61},{"ano":1998,"count":8,"valor":197563.24},{"ano":1999,"count":19,"valor":530393.52},{"ano":2000,"count":21,"valor":577313.58},{"ano":2001,"count":34,"valor":2785947.14},{"ano":2002,"count":56,"valor":2400843.91},{"ano":2003,"count":32,"valor":3049589.97},{"ano":2004,"count":62,"valor":4321507.83},{"ano":2005,"count":150,"valor":8741662.67},{"ano":2006,"count":108,"valor":256261541.38},{"ano":2007,"count":170,"valor":9049644.25},{"ano":2008,"count":188,"valor":11714053.84},{"ano":2009,"count":219,"valor":48064829.13},{"ano":2010,"count":222,"valor":71877051.84},{"ano":2011,"count":332,"valor":20299420.78},{"ano":2012,"count":492,"valor":52694865.4},{"ano":2013,"count":561,"valor":98443480.93},{"ano":2014,"count":588,"valor":61814454.1},{"ano":2015,"count":652,"valor":69091787.48},{"ano":2016,"count":826,"valor":126222265.76},{"ano":2017,"count":1019,"valor":259699086.99},{"ano":2018,"count":1337,"valor":130355638.56},{"ano":2019,"count":2547,"valor":199857975.23},{"ano":2020,"count":2115,"valor":178953111.95},{"ano":2021,"count":3415,"valor":685463415.92},{"ano":2022,"count":918,"valor":92279940.26},{"ano":2023,"count":59,"valor":80732.93},{"ano":2024,"count":50,"valor":283909.28}],"monthly":[{"mes":"2015-01","count":49},{"mes":"2015-02","count":46},{"mes":"2015-03","count":59},{"mes":"2015-04","count":49},{"mes":"2015-05","count":61},{"mes":"2015-06","count":62},{"mes":"2015-07","count":65},{"mes":"2015-08","count":45},{"mes":"2015-09","count":48},{"mes":"2015-10","count":69},{"mes":"2015-11","count":53},{"mes":"2015-12","count":46},{"mes":"2016-01","count":57},{"mes":"2016-02","count":47},{"mes":"2016-03","count":60},{"mes":"2016-04","count":71},{"mes":"2016-05","count":63},{"mes":"2016-06","count":88},{"mes":"2016-07","count":80},{"mes":"2016-08","count":83},{"mes":"2016-09","count":93},{"mes":"2016-10","count":63},{"mes":"2016-11","count":73},{"mes":"2016-12","count":48},{"mes":"2017-01","count":71},{"mes":"2017-02","count":78},{"mes":"2017-03","count":85},{"mes":"2017-04","count":75},{"mes":"2017-05","count":96},{"mes":"2017-06","count":88},{"mes":"2017-07","count":88},{"mes":"2017-08","count":78},{"mes":"2017-09","count":77},{"mes":"2017-10","count":95},{"mes":"2017-11","count":119},{"mes":"2017-12","count":69},{"mes":"2018-01","count":94},{"mes":"2018-02","count":74},{"mes":"2018-03","count":99},{"mes":"2018-04","count":97},{"mes":"2018-05","count":88},{"mes":"2018-06","count":139},{"mes":"2018-07","count":118},{"mes":"2018-08","count":149},{"mes":"2018-09","count":116},{"mes":"2018-10","count":107},{"mes":"2018-11","count":105},{"mes":"2018-12","count":151},{"mes":"2019-01","count":195},{"mes":"2019-02","count":177},{"mes":"2019-03","count":201},{"mes":"2019-04","count":278},{"mes":"2019-05","count":248},{"mes":"2019-06","count":164},{"mes":"2019-07","count":211},{"mes":"2019-08","count":181},{"mes":"2019-09","count":273},{"mes":"2019-10","count":259},{"mes":"2019-11","count":152},{"mes":"2019-12","count":208},{"mes":"2020-01","count":145},{"mes":"2020-02","count":162},{"mes":"2020-03","count":223},{"mes":"2020-04","count":136},{"mes":"2020-05","count":138},{"mes":"2020-06","count":171},{"mes":"2020-07","count":188},{"mes":"2020-08","count":219},{"mes":"2020-09","count":207},{"mes":"2020-10","count":221},{"mes":"2020-11","count":136},{"mes":"2020-12","count":169},{"mes":"2021-01","count":163},{"mes":"2021-02","count":185},{"mes":"2021-03","count":270},{"mes":"2021-04","count":477},{"mes":"2021-05","count":337},{"mes":"2021-06","count":220},{"mes":"2021-07","count":356},{"mes":"2021-08","count":353},{"mes":"2021-09","count":292},{"mes":"2021-10","count":235},{"mes":"2021-11","count":253},{"mes":"2021-12","count":274},{"mes":"2022-01","count":275},{"mes":"2022-02","count":261},{"mes":"2022-03","count":51},{"mes":"2022-04","count":28},{"mes":"2022-05","count":63},{"mes":"2022-06","count":65},{"mes":"2022-07","count":51},{"mes":"2022-08","count":36},{"mes":"2022-09","count":44},{"mes":"2022-10","count":15},{"mes":"2022-11","count":24},{"mes":"2022-12","count":5}],"comarcas":[{"nome":"Palmas","count":9225},{"nome":"Goiatins","count":5093},{"nome":"Itacajá","count":1101},{"nome":"Justiça 4.0","count":481},{"nome":"Araguaína","count":111},{"nome":"Dianópolis","count":58},{"nome":"Taguatinga","count":41},{"nome":"Arraias","count":33},{"nome":"Paraíso do Tocantins","count":33},{"nome":"Paranã","count":27}],"varas":[{"nome":"1ª Escriv. Cível Goiatins","count":4715},{"nome":"7ª Vara Cível Palmas","count":3161},{"nome":"2ª Vara Cível Palmas","count":1293},{"nome":"1ª Escriv. Cível Itacajá","count":1077},{"nome":"1ª Vara Cível Palmas","count":1071},{"nome":"3ª Vara Cível Palmas","count":1063},{"nome":"4ª Vara Cível Palmas","count":815},{"nome":"5ª Vara Cível Palmas","count":772},{"nome":"6ª Vara Cível Palmas","count":492},{"nome":"1ª Escriv. Criminal Goiatins","count":378},{"nome":"1º Juizado Especial Palmas","count":367},{"nome":"Justiça 4.0 Previd. 3º Gab.","count":162},{"nome":"Justiça 4.0 Previd. 2º Gab.","count":157},{"nome":"Justiça 4.0 Previd. 1º Gab.","count":151},{"nome":"1ª Turma Recursal","count":50},{"nome":"CEJUSC","count":37},{"nome":"Violência contra Mulher","count":33},{"nome":"1ª Vara Crim. Araguaína","count":32},{"nome":"1ª Vara Crim. Taguatinga","count":32},{"nome":"1ª Vara Crim. Arraias","count":26}],"competencias":[{"nome":"CÍVEL","count":10808},{"nome":"JUIZADOS ESPECIAIS CÍVEIS","count":1431},{"nome":"CÍVEL / FAZENDA E REG. PÚBLICOS","count":1174},{"nome":"FAMÍLIA E SUCESSÕES","count":637},{"nome":"JUSTIÇA 4.0 PREVIDENCIÁRIO","count":470},{"nome":"JUIZADO / FAZENDA PÚBLICA","count":367},{"nome":"CRIMINAL","count":291},{"nome":"CÍVEL / ARBITRAGEM","count":189},{"nome":"VIOLÊNCIA DOMÉSTICA","count":161},{"nome":"EXECUÇÃO FISCAL","count":131},{"nome":"TURMAS RECURSAIS","count":130},{"nome":"JUIZADO INF. E JUVENTUDE","count":108}],"classes":[{"nome":"Cumprimento de Sentença","count":5092},{"nome":"Execução de Título Extrajudicial","count":4245},{"nome":"Procedimento Comum Cível","count":1983},{"nome":"Procedimento Juizado Esp. Cível","count":1100},{"nome":"Cumpr. Sentença c/ Fazenda Pública","count":1095},{"nome":"Embargos à Execução","count":254},{"nome":"Execução Fiscal","count":143},{"nome":"Inquérito Policial","count":137},{"nome":"Cumpr. Sentença - Lei Arbitral","count":135},{"nome":"Cumpr. Sentença - Alimentos","count":130},{"nome":"Recurso Inominado Cível","count":129},{"nome":"Ação Penal - Proc. Ordinário","count":124},{"nome":"Medidas Protetivas - Maria da Penha","count":105},{"nome":"Alimentos - Lei 5.478/68","count":103},{"nome":"Embargos de Terceiro Cível","count":102}],"assuntos":[{"nome":"Cédula de Crédito Bancário","count":965},{"nome":"Empréstimo Consignado","count":883},{"nome":"Contratos Bancários","count":781},{"nome":"Cheque","count":607},{"nome":"Mora","count":601},{"nome":"Tarifas","count":547},{"nome":"Despesas Condominiais","count":513},{"nome":"Cartão de Crédito","count":447},{"nome":"Duplicata","count":441},{"nome":"Salário-Maternidade","count":413},{"nome":"Seguro","count":339},{"nome":"Nota Promissória","count":283},{"nome":"Aposentadoria Rural","count":283},{"nome":"Alienação Fiduciária","count":263},{"nome":"Compra e Venda","count":257}],"faixas_valor":[{"faixa":"Até R$10k","count":5095},{"faixa":"R$10k-50k","count":6523},{"faixa":"R$50k-100k","count":1165},{"faixa":"R$100k-500k","count":1548},{"faixa":"R$500k-1M","count":216},{"faixa":"Acima R$1M","count":247}],"prioridade":[{"tipo":"Sem Prioridade","count":14521},{"tipo":"Com Prioridade","count":1731}],"liminar":[{"tipo":"Requerida","count":3181},{"tipo":"Não Requerida","count":13045},{"tipo":"Outro","count":26}],"top_autores":[{"nome":"BRADESCO EST UNIF","count":681},{"nome":"DIREÇÃO GERAL","count":415},{"nome":"POLÍCIA CIVIL/TO","count":350},{"nome":"MINISTÉRIO PÚBLICO/TO","count":292},{"nome":"BASA DIREÇÃO GERAL","count":191},{"nome":"KENERSON IND. E COM.","count":112},{"nome":"ESTADO DO TOCANTINS","count":104},{"nome":"COLÉGIO UPERIMM","count":87},{"nome":"SICOOB UNICENTRO BR","count":76},{"nome":"BRADESCO FINANCIAMENTOS","count":66},{"nome":"AG. FOMENTO DO TO","count":65},{"nome":"COND. ALPHAVILLE PALMAS 1","count":64},{"nome":"COND. MIRANTE DO LAGO","count":60},{"nome":"FAPTO","count":59},{"nome":"BANCO SANTANDER","count":46}],"top_reus":[{"nome":"BRADESCO EST UNIF","count":1237},{"nome":"INSS","count":1113},{"nome":"ESTADO DO TOCANTINS","count":390},{"nome":"DIREÇÃO GERAL","count":210},{"nome":"BRADESCO FINANCIAMENTOS","count":190},{"nome":"BANCO PAN","count":180},{"nome":"MUNICÍPIO DE GOIATINS","count":156},{"nome":"BANCO BMG","count":154},{"nome":"BANCO ITAÚ CONSIGNADO","count":122},{"nome":"BANCO CETELEM","count":116},{"nome":"ATS (SANEAMENTO)","count":106},{"nome":"UNIMED FEDERAÇÃO/TO","count":105},{"nome":"PREF. BARRA DO OURO","count":102},{"nome":"BRADESCO VIDA/PREVIDÊNCIA","count":94},{"nome":"ENERGISA TOCANTINS","count":83}],"delta_dist":[{"faixa":"Mesmo dia","count":14730},{"faixa":"1-7 dias","count":0},{"faixa":"8-30 dias","count":5},{"faixa":"31-90 dias","count":7},{"faixa":"91-365 dias","count":6},{"faixa":"Mais de 1 ano","count":1223}],"comarca_yearly":{"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":[{"comarca":"Palmas","data":[140,100,160,168,191,200,303,455,508,525,571,735,786,796,1013,960,1012,333,5,21]},{"comarca":"Goiatins","data":[8,7,9,20,26,15,22,25,49,57,72,72,212,457,1239,887,1702,183,0,0]},{"comarca":"Itacajá","data":[2,0,1,0,2,6,4,10,4,4,7,17,14,59,210,146,417,198,0,0]},{"comarca":"Justiça 4.0","data":[0,0,0,0,0,0,2,0,0,1,0,0,4,22,77,92,203,79,0,1]}]},"vara_yearly":{"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":[{"vara":"1ª Escriv. Cível Goiatins","data":[7,7,9,19,23,14,20,24,42,49,65,65,196,411,1181,834,1539,181,0,0]},{"vara":"7ª Vara Cível Palmas","data":[48,33,45,45,60,57,98,143,148,153,135,217,245,251,303,365,677,46,0,0]},{"vara":"2ª Vara Cível Palmas","data":[18,7,14,18,18,27,49,66,77,80,106,140,91,96,215,200,62,2,0,0]},{"vara":"1ª Escriv. Cível Itacajá","data":[2,0,1,0,2,6,4,10,3,4,7,17,14,59,208,146,398,196,0,0]},{"vara":"1ª Vara Cível Palmas","data":[39,22,29,25,39,34,44,79,85,77,95,100,77,71,81,83,55,1,0,0]}]}};
+const C={navy:'#1B3A6B',blue:'#2563EB',lblue:'#3B82F6',teal:'#0D9488',
+  indigo:'#4F46E5',violet:'#7C3AED',amber:'#D97706',green:'#059669',
+  red:'#DC2626',gray:'#9CA3AF',orange:'#EA580C',pink:'#DB2777',cyan:'#0891B2'};
+const COMARCA_C={'Palmas':'#2563EB','Goiatins':'#0D9488','Itacajá':'#D97706',
+  'Dianópolis':'#DC2626','Araguaína':'#7C3AED','Taguatinga':'#059669',
+  'Arraias':'#EA580C','Outros':'#9CA3AF'};
+Chart.defaults.font.family="'Segoe UI',Arial,sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.color='#4B5563';
+function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'k';return n}
 
-const CL=['#2563eb','#f59e0b','#10b981','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16','#f97316','#6366f1','#14b8a6','#e11d48','#a855f7','#0ea5e9','#65a30d'];
-const fn=n=>n.toLocaleString('pt-BR');
-const fb=n=>{if(n>=1e9)return'R$ '+(n/1e9).toFixed(2).replace('.',',')+' bi';if(n>=1e6)return'R$ '+(n/1e6).toFixed(1).replace('.',',')+' mi';if(n>=1e3)return'R$ '+(n/1e3).toFixed(1).replace('.',',')+' mil';return'R$ '+n.toFixed(0)};
-const fp=(p,t)=>((p/t)*100).toFixed(1).replace('.',',')+' %';
+// 1. Dist por Ano
+(function(){
+  const raw=[{a:2007,t:78},{a:2008,t:87},{a:2009,t:92},{a:2010,t:117},{a:2011,t:160},
+    {a:2012,t:382},{a:2013,t:589},{a:2014,t:705},{a:2015,t:582},{a:2016,t:651},
+    {a:2017,t:574},{a:2018,t:639},{a:2019,t:587},{a:2020,t:524},{a:2021,t:392},
+    {a:2022,t:371},{a:2023,t:276},{a:2024,t:313},{a:2025,t:443},{a:2026,t:76}];
+  new Chart(document.getElementById('cDA'),{type:'bar',
+    data:{labels:raw.map(r=>r.a),datasets:[{label:'Distribuídos',data:raw.map(r=>r.t),
+      backgroundColor:raw.map(r=>r.a===2018?C.amber:r.a===2026?C.gray:C.blue),borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{display:false}},y:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}}}}});
+})();
 
-function sw(id,el){document.querySelectorAll('.tp').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));document.getElementById(id).classList.add('on');el.classList.add('on')}
+// 2. Sazonalidade
+(function(){
+  const d=[1271,1276,1322,1493,1434,1321,1444,1463,1453,1384,1284,1247];
+  const mx=Math.max(...d),mn=Math.min(...d);
+  new Chart(document.getElementById('cMes'),{type:'bar',
+    data:{labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+      datasets:[{label:'Distribuições',data:d,
+        backgroundColor:d.map(v=>v===mx?C.green:v===mn?C.red:C.lblue),borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{display:false}},y:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}}}}});
+})();
 
-// KPIs
-document.getElementById('k1').textContent=fn(D.total);
-document.getElementById('k2').textContent=fb(D.total_valor);
-document.getElementById('k2s').textContent='Média: '+fb(D.media_valor);
-document.getElementById('k3').textContent=fb(D.mediana_valor);
-document.getElementById('k4').textContent=fn(D.com_prioridade);
-document.getElementById('k4s').textContent=fp(D.com_prioridade,D.total)+' do total';
-document.getElementById('k5').textContent=fn(D.com_liminar);
-document.getElementById('k5s').textContent=fp(D.com_liminar,D.total)+' do total';
-const pico=D.yearly.reduce((a,b)=>b.count>a.count?b:a);
-document.getElementById('k8').textContent=fn(pico.count);
-document.getElementById('k8s').textContent='em '+pico.ano;
-document.getElementById('gd').textContent=new Date().toLocaleDateString('pt-BR');
+// 3. Top 15 Assuntos
+(function(){
+  const d=[{a:'Alienação Fiduciária',v:543},{a:'Cédula de Crédito Bancário',v:368},
+    {a:'Aposentadoria Rural',v:285},{a:'Mora',v:275},{a:'Obrig. Fazer/Não Fazer',v:271},
+    {a:'Contratos Bancários',v:257},{a:'Salário-Maternidade',v:249},{a:'Esbulho/Turbação/Ameaça',v:216},
+    {a:'Empréstimo Consignado',v:191},{a:'Cédula de Crédito Rural',v:176},
+    {a:'Pagamento',v:175},{a:'Pensão por Morte',v:170},{a:'Citação',v:167},
+    {a:'Direito de Imagem',v:166},{a:'Usucapião Extraordinária',v:166}].reverse();
+  new Chart(document.getElementById('cAss'),{type:'bar',
+    data:{labels:d.map(x=>x.a),datasets:[{label:'Distribuídos',data:d.map(x=>x.v),
+      backgroundColor:C.teal,borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}},
+              y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+})();
 
-Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
-Chart.defaults.font.size=11;Chart.defaults.color='#6c757d';
+// 4. Top 15 Classes
+(function(){
+  const d=[{c:'Procedimento Comum Cível',v:2415},{c:'Cumprimento de Sentença',v:1065},
+    {c:'Exec. Título Extrajudicial',v:864},{c:'Busca e Apreensão (Al. Fid.)',v:549},
+    {c:'Cumpr. Sentença c/ Fazenda',v:495},{c:'Carta Precatória (Físico)',v:278},
+    {c:'Usucapião',v:243},{c:'Carta Precatória Cível',v:205},{c:'Reintegração de Posse',v:195},
+    {c:'Monitória',v:160},{c:'Embargos à Execução',v:159},{c:'Cart. Precatória (Fís.) Cível',v:142},
+    {c:'Alvará Judicial',v:99},{c:'Ação Civil Pública',v:92},{c:'Outros Jurisdição Voluntária',v:85}].reverse();
+  new Chart(document.getElementById('cCls'),{type:'bar',
+    data:{labels:d.map(x=>x.c),datasets:[{label:'Distribuídos',data:d.map(x=>x.v),
+      backgroundColor:C.indigo,borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}},
+              y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+})();
 
-// ===== TAB 1: TEMPORAL =====
-new Chart(document.getElementById('c-yr'),{type:'bar',data:{labels:D.yearly.map(y=>y.ano),datasets:[{label:'Processos',data:D.yearly.map(y=>y.count),backgroundColor:CL[0]+'BB',borderRadius:3,order:2},{label:'Valor (R$ mi)',data:D.yearly.map(y=>+(y.valor/1e6).toFixed(1)),type:'line',borderColor:CL[1],backgroundColor:CL[1]+'20',borderWidth:2,tension:.3,pointRadius:2,yAxisID:'y1',order:1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:14}},tooltip:{callbacks:{label:c=>c.datasetIndex===0?'Processos: '+fn(c.parsed.y):'Valor: R$ '+c.parsed.y.toFixed(1)+' mi'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'Processos'},grid:{color:'#f0f0f0'}},y1:{position:'right',beginAtZero:true,title:{display:true,text:'Valor (R$ mi)'},grid:{display:false}}}}});
+// 5. Faixas
+(function(){
+  new Chart(document.getElementById('cFx'),{type:'doughnut',
+    data:{labels:['R$5k–20k','R$20k–50k','< R$5k','R$100k–500k','R$0 zerado','R$50k–100k','Sem valor','>R$500k'],
+      datasets:[{data:[5102,3519,2937,1581,1458,1190,588,465],
+        backgroundColor:[C.blue,C.teal,C.green,C.amber,C.gray,C.indigo,C.cyan,C.red],
+        hoverOffset:8,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{font:{size:10},padding:8}}}}});
+})();
 
-new Chart(document.getElementById('c-mo'),{type:'line',data:{labels:D.monthly.map(m=>{const[y,mo]=m.mes.split('-');return mo+'/'+y.slice(2)}),datasets:[{label:'Processos/mês',data:D.monthly.map(m=>m.count),borderColor:CL[0],backgroundColor:CL[0]+'12',borderWidth:1.5,fill:true,tension:.3,pointRadius:0,pointHoverRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:12}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+// 6. Minutas Fused (stacked)
+(function(){
+  const anos=[2020,2021,2022,2023,2024];
+  new Chart(document.getElementById('cMF'),{type:'bar',
+    data:{labels:anos.map(String),datasets:[
+      {label:'Decisão/Despacho (84%)',data:[19031,28456,31259,24704,19561],backgroundColor:C.blue,borderRadius:{topLeft:0,topRight:0}},
+      {label:'Sentença (13%)',data:[1654,4162,5477,4456,3428],backgroundColor:C.green},
+      {label:'Despacho simples (1,5%)',data:[1412,169,129,139,374],backgroundColor:C.amber},
+      {label:'Decisão autônoma (1,1%)',data:[1059,72,101,91,255],backgroundColor:C.violet,borderRadius:{topLeft:4,topRight:4}}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{padding:10,font:{size:10}}},
+        tooltip:{mode:'index',intersect:false,
+          callbacks:{footer:ctx=>'Total: '+ctx.reduce((a,c)=>a+c.parsed.y,0)}}},
+      scales:{x:{stacked:true,grid:{display:false}},
+              y:{stacked:true,grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}}}}});
+})();
 
-new Chart(document.getElementById('c-cy'),{type:'line',data:{labels:D.comarca_yearly.years,datasets:D.comarca_yearly.series.map((s,i)=>({label:s.comarca,data:s.data,borderColor:CL[i],borderWidth:2,tension:.3,fill:false,pointRadius:2,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:10,font:{size:10}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+// 7. Minutas Tipo donut
+(function(){
+  new Chart(document.getElementById('cMT'),{type:'doughnut',
+    data:{labels:['Decisão/Despacho','Sentença','Despacho simples','Decisão autônoma'],
+      datasets:[{data:[123011,19175,2216,1573],
+        backgroundColor:[C.blue,C.green,C.amber,C.violet],
+        hoverOffset:8,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{font:{size:10},padding:8}}}}});
+})();
 
-new Chart(document.getElementById('c-vy'),{type:'line',data:{labels:D.vara_yearly.years,datasets:D.vara_yearly.series.map((s,i)=>({label:s.vara,data:s.data,borderColor:CL[i],borderWidth:2,tension:.3,fill:false,pointRadius:2,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:10,font:{size:10}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+// 8. Trajetória Stacked
+(function(){
+  const anos=[2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+  const comarcas=['Palmas','Goiatins','Itacajá','Dianópolis','Araguaína','Taguatinga','Arraias','Outros'];
+  const vals={'Palmas':[191,200,303,455,508,525,571,735,786,796,1013,960,1012,333,5,21],
+    'Goiatins':[26,15,22,25,49,57,72,72,212,457,1239,887,1702,183,0,0],
+    'Itacajá':[2,6,4,10,4,4,7,17,14,59,210,146,417,198,0,0],
+    'Dianópolis':[0,0,0,0,0,0,0,0,0,0,0,4,2,37,13,2],
+    'Araguaína':[0,0,0,0,0,0,1,0,2,0,1,2,68,35,2,0],
+    'Taguatinga':[0,0,0,0,0,0,0,0,0,0,0,0,1,8,18,14],
+    'Arraias':[0,0,0,0,0,0,0,1,0,0,1,0,1,7,15,7],
+    'Outros':[0,0,0,0,0,1,0,1,1,1,3,11,8,20,3,0]};
+  new Chart(document.getElementById('cTraj'),{type:'bar',
+    data:{labels:anos.map(String),
+      datasets:comarcas.map(c=>({label:c,data:vals[c],backgroundColor:COMARCA_C[c]}))},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{padding:8,font:{size:10},boxWidth:10}},
+        tooltip:{mode:'index',intersect:false,
+          callbacks:{footer:ctx=>'Total ano: '+ctx.reduce((a,c)=>a+c.parsed.y,0)}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:10}}},
+              y:{stacked:true,grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}}}}});
+})();
 
-// ===== TAB 2: COMARCAS & VARAS =====
-new Chart(document.getElementById('c-com'),{type:'bar',data:{labels:D.comarcas.map(c=>c.nome),datasets:[{data:D.comarcas.map(c=>c.count),backgroundColor:CL.map(c=>c+'BB'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' ('+fp(c.parsed.x,D.total)+')'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false}}}}});
+// 9. Competências
+(function(){
+  new Chart(document.getElementById('cComp'),{type:'doughnut',
+    data:{labels:['CÍVEL','JEC Cível','Cível/Fazenda','Família e Suc.','Previdenciário',
+        'JEC/Fazenda','CRIMINAL','Cível/Arbitragem','Não Requerida','Violência Dom.'],
+      datasets:[{data:[10809,1431,1174,640,470,367,296,189,162,161],
+        backgroundColor:[C.blue,C.teal,C.indigo,C.amber,C.green,C.violet,C.red,C.orange,C.gray,C.pink],
+        hoverOffset:8,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{font:{size:10},padding:6}}}}});
+})();
 
-new Chart(document.getElementById('c-var'),{type:'bar',data:{labels:D.varas.map(v=>v.nome),datasets:[{data:D.varas.map(v=>v.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+// 10. Prioridade
+(function(){
+  new Chart(document.getElementById('cPrio'),{type:'doughnut',
+    data:{labels:['Sem prioridade (89,7%)','Com prioridade (10,3%)'],
+      datasets:[{data:[14521,1731],backgroundColor:[C.blue,C.amber],
+        hoverOffset:6,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}});
+})();
 
-// Vara table
-(function(){const tb=document.querySelector('#tb-var tbody');const mx=D.varas[0].count;
-const comMap={"Goiatins":"Goiatins","Palmas":"Palmas","Itacajá":"Itacajá","Araguaína":"Araguaína","Taguatinga":"Taguatinga","Arraias":"Arraias","Justiça":"Justiça 4.0","CEJUSC":"Palmas","Turma":"Palmas","Violência":"Palmas"};
-D.varas.forEach((v,i)=>{const tr=document.createElement('tr');const w=Math.max(3,(v.count/mx)*180);
-let com='—';for(const[k,val] of Object.entries(comMap)){if(v.nome.includes(k)){com=val;break}}
-tr.innerHTML=`<td>${i+1}</td><td><strong>${v.nome}</strong></td><td>${com}</td><td>${fn(v.count)}</td><td>${fp(v.count,D.total)}</td><td><div class="bar-c"><div class="mb" style="width:${w}px;background:${CL[i%CL.length]}"></div></div></td>`;
-tb.appendChild(tr)})})();
+// 11. Liminar
+(function(){
+  new Chart(document.getElementById('cLim'),{type:'doughnut',
+    data:{labels:['Não requerida (77,5%)','Requerida (18,9%)','Deferida (0,1%)','Indeferida (0,1%)'],
+      datasets:[{data:[13045,3181,16,10],backgroundColor:[C.blue,C.amber,C.red,C.gray],
+        hoverOffset:6,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}});
+})();
 
-// ===== TAB 3: CLASSES & ASSUNTOS =====
-new Chart(document.getElementById('c-cls'),{type:'bar',data:{labels:D.classes.map(c=>c.nome),datasets:[{data:D.classes.map(c=>c.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' ('+fp(c.parsed.x,D.total)+')'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+// 12. Top 10 Movimentos
+(function(){
+  const d=[{m:'Protocolizada Petição',v:321414},{m:'Confirmada intimação eletrônica',v:243007},
+    {m:'Expedida/certif. intimação eletrônica',v:235688},{m:'Juntada certidão – susp. prazo',v:116782},
+    {m:'Conclusão para despacho',v:81524},{m:'Despacho – mero expediente',v:79627},
+    {m:'Decurso de Prazo',v:64236},{m:'Lavrada Certidão',v:63979},
+    {m:'Intimação Eletr. – Despacho/Decisão',v:62162},{m:'Remessa Interna – Em Diligência',v:43251}].reverse();
+  new Chart(document.getElementById('cMov'),{type:'bar',
+    data:{labels:d.map(x=>x.m),datasets:[{label:'Eventos (amostra)',data:d.map(x=>x.v),
+      backgroundColor:C.lblue,borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v),font:{size:10}}},
+              y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+})();
 
-new Chart(document.getElementById('c-ass'),{type:'bar',data:{labels:D.assuntos.map(a=>a.nome),datasets:[{data:D.assuntos.map(a=>a.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+// 13. Top 10 Localizadores
+(function(){
+  const d=[{l:'G- CONCLUSOS +70 DIAS',v:478955,c:C.red},{l:'PETIÇÃO',v:160619,c:C.blue},
+    {l:'URGENTE DULCE',v:130758,c:C.orange},{l:'PROVIDÊNCIA GERAL',v:95876,c:C.teal},
+    {l:'URGENTE IARA',v:87795,c:C.orange},{l:'URGENTE ELOIZA',v:68595,c:C.orange},
+    {l:'RECEBIDOS',v:57093,c:C.indigo},{l:'URGENTE ANA VALERIA',v:49323,c:C.orange},
+    {l:'URGENTE ROSE',v:32407,c:C.orange},{l:'DECURSO DE PRAZO',v:30038,c:C.gray}].reverse();
+  new Chart(document.getElementById('cLoc'),{type:'bar',
+    data:{labels:d.map(x=>x.l),datasets:[{label:'Entradas (amostra)',data:d.map(x=>x.v),
+      backgroundColor:d.map(x=>x.c),borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v),font:{size:10}}},
+              y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+})();
 
-new Chart(document.getElementById('c-cmp'),{type:'doughnut',data:{labels:D.competencias.map(c=>c.nome),datasets:[{data:D.competencias.map(c=>c.count),backgroundColor:CL.map(c=>c+'CC'),borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:6,font:{size:9}}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
+// 14. Movimentos por Ano
+(function(){
+  const anos=[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+  const data=[19961,35220,58611,84917,126103,98299,337787,411771,478107,342799];
+  new Chart(document.getElementById('cMA'),{type:'bar',
+    data:{labels:anos.map(String),datasets:[
+      {type:'bar',label:'Movimentos (amostra)',data,backgroundColor:C.indigo+'99',borderRadius:4,yAxisID:'y'},
+      {type:'line',label:'Tendência',data,borderColor:C.navy,borderWidth:2,
+        pointRadius:3,pointBackgroundColor:C.navy,fill:false,tension:0.3,yAxisID:'y'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:10},padding:12}},
+        tooltip:{mode:'index',intersect:false}},
+      scales:{x:{grid:{display:false}},
+              y:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)},beginAtZero:true}}}});
+})();
 
-new Chart(document.getElementById('c-dlt'),{type:'bar',data:{labels:D.delta_dist.map(d=>d.faixa),datasets:[{data:D.delta_dist.map(d=>d.count),backgroundColor:[CL[2]+'CC',CL[0]+'CC',CL[1]+'CC',CL[4]+'CC',CL[3]+'CC',CL[5]+'CC'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+// 15+16. Comparativo Distribuídos vs Minutas (painel duplo)
+(function(){
+  const anos = ['2020','2021','2022','2023','2024'];
+  const minutas = [23156, 32859, 36966, 29390, 23618];
+  const dist    = [524, 392, 371, 276, 313];
+  const ratio   = [44.2, 83.8, 99.6, 106.5, 75.5];
 
-// ===== TAB 4: VALORES =====
-new Chart(document.getElementById('c-fvl'),{type:'bar',data:{labels:D.faixas_valor.map(f=>f.faixa),datasets:[{data:D.faixas_valor.map(f=>f.count),backgroundColor:[CL[2]+'CC',CL[0]+'CC',CL[1]+'CC',CL[4]+'CC',CL[3]+'CC',CL[5]+'CC'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.y)+' processos'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0f0f0'}}}}});
+  // Painel esquerdo: dual-axis combo (barra minutas + linha dist)
+  new Chart(document.getElementById('cComp1'),{
+    data:{
+      labels:anos,
+      datasets:[
+        {type:'bar',label:'Minutas produzidas (eProc)',data:minutas,
+         backgroundColor:C.indigo+'88',borderColor:C.indigo,borderWidth:1,
+         borderRadius:5,yAxisID:'y1'},
+        {type:'line',label:'Proc. distribuídos (QLIK)',data:dist,
+         borderColor:C.amber,backgroundColor:C.amber+'22',borderWidth:2.5,
+         borderDash:[6,4],pointRadius:5,pointBackgroundColor:C.amber,
+         fill:false,tension:0.3,yAxisID:'y2'}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:10},padding:10}},
+        tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10}}},
+        y1:{type:'linear',position:'left',grid:{color:'#F1F5F9'},
+          ticks:{callback:v=>fmt(v),font:{size:10}},
+          title:{display:true,text:'Minutas (eProc)',font:{size:9}},beginAtZero:true},
+        y2:{type:'linear',position:'right',grid:{drawOnChartArea:false},
+          ticks:{font:{size:10}},
+          title:{display:true,text:'Proc. distribuídos (QLIK)',font:{size:9}},beginAtZero:true}
+      }}
+  });
 
-new Chart(document.getElementById('c-lim'),{type:'doughnut',data:{labels:D.liminar.map(l=>l.tipo),datasets:[{data:D.liminar.map(l=>l.count),backgroundColor:[CL[3]+'CC',CL[2]+'CC',CL[6]+'CC'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
+  // Painel direito: índice de resposta processual (barra simples)
+  const maxRatio = Math.max(...ratio);
+  new Chart(document.getElementById('cComp2'),{type:'bar',
+    data:{labels:anos,
+      datasets:[{label:'Minutas por proc. distribuído',data:ratio,
+        backgroundColor:ratio.map(v=>v===maxRatio?C.green:C.teal+'99'),
+        borderColor:ratio.map(v=>v===maxRatio?C.green:C.teal),
+        borderWidth:1,borderRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:10},padding:10}},
+        tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y} minutas/processo`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10}}},
+        y:{grid:{color:'#F1F5F9'},beginAtZero:true,
+          ticks:{font:{size:10}},
+          title:{display:true,text:'Minutas / proc. distribuído',font:{size:9}}}
+      }}
+  });
+})();
 
-new Chart(document.getElementById('c-pri'),{type:'doughnut',data:{labels:D.prioridade.map(p=>p.tipo),datasets:[{data:D.prioridade.map(p=>p.count),backgroundColor:[CL[6]+'CC',CL[4]+'CC'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+fn(c.parsed)+' ('+fp(c.parsed,t)+')'}}}}}});
-
-// ===== TAB 5: LITIGANTES =====
-new Chart(document.getElementById('c-aut'),{type:'bar',data:{labels:D.top_autores.map(a=>a.nome),datasets:[{data:D.top_autores.map(a=>a.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos como autor'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
-
-new Chart(document.getElementById('c-reu'),{type:'bar',data:{labels:D.top_reus.map(r=>r.nome),datasets:[{data:D.top_reus.map(r=>r.count),backgroundColor:CL.map(c=>c+'99'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fn(c.parsed.x)+' processos como réu'}}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
 </script>
 </body>
 </html>
