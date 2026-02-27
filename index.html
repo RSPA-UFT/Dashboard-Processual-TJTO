@@ -77,9 +77,9 @@
 
 <!-- KPIs -->
 <div class="grid g5" style="padding:16px 16px 4px">
-  <div class="kpi a1"><div class="lbl">Processos — Carreira</div><div class="val">16.840</div><div class="sub">Acervo histórico completo (eProc/CSV)</div></div>
+  <div class="kpi a1"><div class="lbl">Processos — Carreira</div><div class="val">26.211</div><div class="sub">Acervo histórico completo (eProc/CSV)</div></div>
   <div class="kpi a2"><div class="lbl">Minutas Produzidas</div><div class="val">145.989</div><div class="sub">Período 2020–2024 (eProc)</div></div>
-  <div class="kpi a3"><div class="lbl">Valor Total das Causas</div><div class="val">R$ 2,9 bi</div><div class="sub">Mediana: R$ 13.623 (eProc/CSV)</div></div>
+  <div class="kpi a3"><div class="lbl">Valor Total das Causas</div><div class="val">R$ 3,8 bi</div><div class="sub">Mediana: R$ 13.917 (CSV · corrigido)</div></div>
   <div class="kpi a4"><div class="lbl">Acervo Ativo DNO</div><div class="val">7.928</div><div class="sub">Vara Cível/Fazenda — Dianópolis (QLIK)</div></div>
   <div class="kpi a5"><div class="lbl">Movimentos Analisados</div><div class="val">2 milhões</div><div class="sub">Amostra de 5,5 mi registros (eProc)</div></div>
 </div>
@@ -127,28 +127,28 @@
 
 <!-- ── SECTION 2: VALOR DA CAUSA ── -->
 <div class="sec-banner b2" style="margin-top:20px"><span class="dot"></span>ANÁLISE ECONÔMICA — Valor da Causa · Fonte: eProc / CSV (dados_processo.csv · carreira completa)</div>
-<div class="sec-note"><strong>Escopo:</strong> Dataset da carreira completa do magistrado (16.840 processos, todas as comarcas). Distribuição de valor <strong>não-normal</strong> (Shapiro-Wilk p≈0, skewness=83,26) — a mediana (R$ 13.623) é o indicador central correto para comparações.</div>
+<div class="sec-note"><strong>Escopo:</strong> Dataset da carreira completa do magistrado (26.211 processos, todas as comarcas). Distribuição de valor <strong>não-normal</strong> (Shapiro-Wilk p≈0, skewness=84,50) — a mediana (R$ 13.917) é o indicador central correto para comparações. <span style="color:#b45309"><strong>⚠ Corrigido:</strong> bug de parsing CSV (vírgula em Assunto_Principal) corrigido — +9.371 processos recuperados (+55,7%), incluindo 99% dos registros de Dianópolis.</span></div>
 
 <div class="grid g2">
   <div class="card">
-    <div class="ch"><div class="ct">Distribuição por Faixas de Valor da Causa</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · 16.840 processos</div></div>
+    <div class="ch"><div class="ct">Distribuição por Faixas de Valor da Causa</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · 26.211 processos (corrigido)</div></div>
     <div class="cb"><div style="position:relative;height:260px"><canvas id="cFx"></canvas></div></div>
-    <div class="cap"><strong>Como ler:</strong> Proporção de processos por faixa de valor atribuído na autuação. <strong>75% abaixo de R$ 36.257</strong> — perfil de vara de interior com execuções de baixo valor individual. Faixa acima de R$ 500k (2,9%) distorce a média para R$ 178k, tornando a mediana (R$ 13.623) o indicador de referência.</div>
-    <div class="pills"><span class="pill g">75% abaixo de R$ 36k</span><span class="pill a">Média (R$178k) 13× maior que mediana</span><span class="pill r">2,9% acima de R$500k distorce média</span></div>
+    <div class="cap"><strong>Como ler:</strong> Proporção de processos por faixa de valor atribuído na autuação. <strong>75% abaixo de R$ 38.482</strong> — perfil de vara de interior com execuções de baixo valor individual. Faixa acima de R$ 500k (2,5%) distorce a média para R$ 178k, tornando a mediana (R$ 13.917) o indicador de referência.</div>
+    <div class="pills"><span class="pill g">75% abaixo de R$ 38k</span><span class="pill a">Média (R$178k) 13× maior que mediana</span><span class="pill r">2,5% acima de R$500k distorce média</span></div>
   </div>
   <div class="card">
     <div class="ch"><div class="ct">Estatísticas Descritivas — Valor da Causa</div><div class="cs"><span class="tag tc">CSV</span> Carreira completa · Análise univariada</div></div>
     <div class="cb" style="padding-top:16px">
       <table class="stb">
-        <tr><td>Média aritmética</td><td>R$ 178.353,71</td></tr>
-        <tr><td>⭐ Mediana (P50)</td><td>R$ 13.623,22</td></tr>
-        <tr><td>1º Quartil (P25)</td><td>R$ 4.180,00</td></tr>
-        <tr><td>3º Quartil (P75)</td><td>R$ 36.257,23</td></tr>
-        <tr><td>Percentil 95</td><td>R$ 266.232,47</td></tr>
+        <tr><td>Média aritmética</td><td>R$ 178.745,38</td></tr>
+        <tr><td>⭐ Mediana (P50)</td><td>R$ 13.916,57</td></tr>
+        <tr><td>1º Quartil (P25)</td><td>R$ 4.790,90</td></tr>
+        <tr><td>3º Quartil (P75)</td><td>R$ 38.482,25</td></tr>
+        <tr><td>Percentil 95</td><td>R$ 292.218,58</td></tr>
         <tr><td>Máximo</td><td>R$ 500.000.000,00</td></tr>
-        <tr><td>Desvio-padrão</td><td>R$ 4.760.161,51</td></tr>
-        <tr><td>Assimetria (skewness)</td><td>83,26 → cauda direita extrema</td></tr>
-        <tr><td>Curtose</td><td>8.006,96 → leptocúrtica</td></tr>
+        <tr><td>Desvio-padrão</td><td>R$ 4.389.991,01</td></tr>
+        <tr><td>Assimetria (skewness)</td><td>84,50 → cauda direita extrema</td></tr>
+        <tr><td>Curtose</td><td>7.180,00 → leptocúrtica</td></tr>
         <tr><td>Shapiro-Wilk p-valor</td><td>≈ 0 → rejeita normalidade</td></tr>
       </table>
     </div>
@@ -196,11 +196,11 @@
 
 <!-- ── SECTION 5: URGÊNCIA FUSED ── -->
 <div class="sec-banner b4" style="margin-top:20px"><span class="dot"></span>INDICADORES DE URGÊNCIA E PRIORIDADE — eProc / CSV · Carreira completa</div>
-<div class="sec-note"><strong>Escopo:</strong> Campos "Prioridade" e "Pedido Liminar" do dataset da carreira completa (16.840 processos). <strong>Prioridade</strong> = tratamento preferencial por lei (idosos, portadores de doença grave). <strong>Liminar</strong> = requerimento de tutela de urgência/cautelar no momento da distribuição.</div>
+<div class="sec-note"><strong>Escopo:</strong> Campos "Prioridade" e "Pedido Liminar" do dataset da carreira completa (26.211 processos · CSV corrigido). <strong>Prioridade</strong> = tratamento preferencial por lei (idosos, portadores de doença grave). <strong>Liminar</strong> = requerimento de tutela de urgência/cautelar no momento da distribuição.</div>
 
 <div class="grid">
   <div class="card">
-    <div class="ch"><div class="ct">Prioridade e Pedido de Liminar — Painel Consolidado</div><div class="cs"><span class="tag tc">CSV</span><span class="tag tf">FUSÃO</span> Carreira completa · 16.840 processos</div></div>
+    <div class="ch"><div class="ct">Prioridade e Pedido de Liminar — Painel Consolidado</div><div class="cs"><span class="tag tc">CSV</span><span class="tag tf">FUSÃO</span> Carreira completa · 26.211 processos (corrigido)</div></div>
     <div class="cb" style="padding-bottom:0">
       <div class="dp">
         <div style="padding-right:16px">
@@ -214,8 +214,8 @@
         </div>
       </div>
     </div>
-    <div class="cap"><strong>Prioridade:</strong> 10,3% do acervo (1.731 processos) com tratamento preferencial — percentual compatível com perfil previdenciário da comarca. <strong>Liminar:</strong> 3.181 processos (18,9%) com pedido registrado. Apenas 16 registradas como deferidas (0,5%) — <span class="w"><strong>provável desatualização cadastral</strong></span>: o campo raramente é atualizado após decisão nos autos, não indica ausência de deferimentos.</div>
-    <div class="pills"><span class="pill g">10,3% com prioridade legal</span><span class="pill a">18,9% com pedido de liminar</span><span class="pill r">Apenas 16 liminares como deferidas — verificar atualização cadastral</span></div>
+    <div class="cap"><strong>Prioridade:</strong> 8,3% do acervo (2.177 processos) com tratamento preferencial — percentual compatível com perfil previdenciário da comarca. <strong>Liminar:</strong> 5.040 processos (19,2%) com pedido registrado. 48 registradas como deferidas (0,9%) — <span class="w"><strong>provável desatualização cadastral</strong></span>: o campo raramente é atualizado após decisão nos autos, não indica ausência de deferimentos.</div>
+    <div class="pills"><span class="pill g">8,3% com prioridade legal (2.177 proc.)</span><span class="pill a">19,2% com pedido de liminar (5.040 proc.)</span><span class="pill r">48 liminares como deferidas (0,9%) — verificar atualização cadastral</span></div>
   </div>
 </div>
 
@@ -360,7 +360,7 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 (function(){
   new Chart(document.getElementById('cFx'),{type:'doughnut',
     data:{labels:['R$5k–20k','R$20k–50k','< R$5k','R$100k–500k','R$0 zerado','R$50k–100k','Sem valor','>R$500k'],
-      datasets:[{data:[5102,3519,2937,1581,1458,1190,588,465],
+      datasets:[{data:[6960,4347,5426,2170,4993,1675,0,654],
         backgroundColor:[C.blue,C.teal,C.green,C.amber,C.gray,C.indigo,C.cyan,C.red],
         hoverOffset:8,borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,
@@ -434,8 +434,8 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 // 10. Prioridade
 (function(){
   new Chart(document.getElementById('cPrio'),{type:'doughnut',
-    data:{labels:['Sem prioridade (89,7%)','Com prioridade (10,3%)'],
-      datasets:[{data:[14521,1731],backgroundColor:[C.blue,C.amber],
+    data:{labels:['Sem prioridade (91,7%)','Com prioridade (8,3%)'],
+      datasets:[{data:[24034,2177],backgroundColor:[C.blue,C.amber],
         hoverOffset:6,borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}});
@@ -444,8 +444,8 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 // 11. Liminar
 (function(){
   new Chart(document.getElementById('cLim'),{type:'doughnut',
-    data:{labels:['Não requerida (77,5%)','Requerida (18,9%)','Deferida (0,1%)','Indeferida (0,1%)'],
-      datasets:[{data:[13045,3181,16,10],backgroundColor:[C.blue,C.amber,C.red,C.gray],
+    data:{labels:['Não requerida (80,7%)','Requerida (19,0%)','Deferida (0,2%)','Outros (0,1%)'],
+      datasets:[{data:[21155,4992,48,16],backgroundColor:[C.blue,C.amber,C.red,C.gray],
         hoverOffset:6,borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}});
