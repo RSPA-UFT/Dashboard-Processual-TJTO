@@ -80,26 +80,26 @@
   <div class="kpi a1"><div class="lbl">Processos — Carreira</div><div class="val">26.211</div><div class="sub">Acervo histórico completo (eProc/CSV)</div></div>
   <div class="kpi a2"><div class="lbl">Minutas Produzidas</div><div class="val">145.989</div><div class="sub">Período 2020–2024 (eProc)</div></div>
   <div class="kpi a3"><div class="lbl">Valor Total das Causas</div><div class="val">R$ 3,8 bi</div><div class="sub">Mediana: R$ 13.917 (CSV · corrigido)</div></div>
-  <div class="kpi a4"><div class="lbl">Acervo Ativo DNO</div><div class="val">7.928</div><div class="sub">Vara Cível/Fazenda — Dianópolis (QLIK)</div></div>
+  <div class="kpi a4"><div class="lbl">Acervo Ativo DNO</div><div class="val">7.572</div><div class="sub">Vara Cível/Fazenda — Dianópolis (QLIK)</div></div>
   <div class="kpi a5"><div class="lbl">Movimentos Analisados</div><div class="val">2 milhões</div><div class="sub">Amostra de 5,5 mi registros (eProc)</div></div>
 </div>
 
 <!-- ── SECTION 1: ACERVO DIANÓPOLIS ── -->
 <div class="sec-banner b1"><span class="dot"></span>ACERVO ATIVO — Vara Cível, Fazenda e Registros Públicos de Dianópolis · Fonte: QLIK (25 planilhas, ~60.000 registros)</div>
-<div class="sec-note"><strong>Escopo:</strong> Dados exclusivos da Vara Cível/Fazenda de Dianópolis/TO. O QLIK registra a <strong>data de distribuição</strong> (atribuição ao juízo), não a data de autuação (protocolo inicial). Total: <strong>7.928 processos ativos</strong> — 6.229 com origem em Dianópolis e 1.629 em Almas.</div>
+<div class="sec-note"><strong>Escopo:</strong> Dados exclusivos da Vara Cível, dos Feitos da Fazenda e Registros Públicos de Dianópolis (órgão julgador atual). Excluídos: Vara de Família (354) e CEJUSC (2). O QLIK registra a <strong>data de distribuição</strong> (atribuição ao juízo), não a data de autuação (protocolo inicial). Total: <strong>7.572 processos ativos</strong> — 6.157 com origem em Dianópolis e 1.349 em Almas.</div>
 
 <div class="grid g2">
   <div class="card">
     <div class="ch"><div class="ct">Processos Distribuídos por Ano</div><div class="cs"><span class="tag tq">QLIK</span> Dianópolis · Data de Distribuição · 2007–2026</div></div>
     <div class="cb"><div style="position:relative;height:240px"><canvas id="cDA"></canvas></div></div>
-    <div class="cap"><strong>Como ler:</strong> Cada barra = processos <em>distribuídos ao juízo</em> naquele ano (data de atribuição, não de protocolo). Pico em <strong>2018 (639)</strong>, queda até 2023 (276) e recuperação em 2024–2025. <span class="w">⚠ 2026 parcial</span> — dados apenas jan–fev.</div>
-    <div class="pills"><span class="pill">Pico: 2018 (639)</span><span class="pill a">Mínimo: 2023 (276)</span><span class="pill g">Recuperação: 2025 (443)</span></div>
+    <div class="cap"><strong>Como ler:</strong> Cada barra = processos <em>distribuídos ao juízo</em> naquele ano (data de atribuição, não de protocolo). Pico em <strong>2014 (662)</strong>, tendência de queda com mínimo em 2023 (274) e recuperação em 2025. <span class="w">⚠ 2026 parcial</span> — dados apenas jan–fev.</div>
+    <div class="pills"><span class="pill">Pico: 2014 (662)</span><span class="pill a">Mínimo: 2023 (274)</span><span class="pill g">Recuperação: 2025 (443)</span></div>
   </div>
   <div class="card">
     <div class="ch"><div class="ct">Sazonalidade Mensal das Distribuições</div><div class="cs"><span class="tag tq">QLIK</span> Dianópolis · Acumulado histórico por mês do ano</div></div>
     <div class="cb"><div style="position:relative;height:240px"><canvas id="cMes"></canvas></div></div>
-    <div class="cap"><strong>Como ler:</strong> Volume total distribuído por mês, acumulando todos os anos. Revela o <strong>padrão sazonal forense</strong>: menor em dezembro (recesso) e concentração de abril a setembro. Padrão compatível com calendário forense nacional.</div>
-    <div class="pills"><span class="pill g">Maior: Abr (1.493)</span><span class="pill a">Menor: Dez (1.247)</span></div>
+    <div class="cap"><strong>Como ler:</strong> Volume total distribuído por mês, acumulando todos os anos. Revela o <strong>padrão sazonal forense</strong>: menor em dezembro (recesso) e pico em novembro — concentração no 2º semestre. Padrão compatível com calendário forense nacional.</div>
+    <div class="pills"><span class="pill g">Maior: Nov (753)</span><span class="pill a">Menor: Dez (525)</span></div>
   </div>
 </div>
 
@@ -297,13 +297,13 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 
 // 1. Dist por Ano
 (function(){
-  const raw=[{a:2007,t:78},{a:2008,t:87},{a:2009,t:92},{a:2010,t:117},{a:2011,t:160},
-    {a:2012,t:382},{a:2013,t:589},{a:2014,t:705},{a:2015,t:582},{a:2016,t:651},
-    {a:2017,t:574},{a:2018,t:639},{a:2019,t:587},{a:2020,t:524},{a:2021,t:392},
-    {a:2022,t:371},{a:2023,t:276},{a:2024,t:313},{a:2025,t:443},{a:2026,t:76}];
+  const raw=[{a:2007,t:75},{a:2008,t:85},{a:2009,t:85},{a:2010,t:114},{a:2011,t:158},
+    {a:2012,t:332},{a:2013,t:544},{a:2014,t:662},{a:2015,t:533},{a:2016,t:602},
+    {a:2017,t:531},{a:2018,t:611},{a:2019,t:568},{a:2020,t:518},{a:2021,t:392},
+    {a:2022,t:369},{a:2023,t:274},{a:2024,t:313},{a:2025,t:443},{a:2026,t:76}];
   new Chart(document.getElementById('cDA'),{type:'bar',
     data:{labels:raw.map(r=>r.a),datasets:[{label:'Distribuídos',data:raw.map(r=>r.t),
-      backgroundColor:raw.map(r=>r.a===2018?C.amber:r.a===2026?C.gray:C.blue),borderRadius:4}]},
+      backgroundColor:raw.map(r=>r.a===2014?C.amber:r.a===2026?C.gray:C.blue),borderRadius:4}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false}},
       scales:{x:{grid:{display:false}},y:{grid:{color:'#F1F5F9'},ticks:{callback:v=>fmt(v)}}}}});
@@ -311,7 +311,7 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 
 // 2. Sazonalidade
 (function(){
-  const d=[1271,1276,1322,1493,1434,1321,1444,1463,1453,1384,1284,1247];
+  const d=[556,576,638,713,710,662,567,616,617,639,753,525];
   const mx=Math.max(...d),mn=Math.min(...d);
   new Chart(document.getElementById('cMes'),{type:'bar',
     data:{labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
@@ -324,12 +324,12 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 
 // 3. Top 15 Assuntos
 (function(){
-  const d=[{a:'Alienação Fiduciária',v:543},{a:'Cédula de Crédito Bancário',v:368},
-    {a:'Aposentadoria Rural',v:285},{a:'Mora',v:275},{a:'Obrig. Fazer/Não Fazer',v:271},
-    {a:'Contratos Bancários',v:257},{a:'Salário-Maternidade',v:249},{a:'Esbulho/Turbação/Ameaça',v:216},
-    {a:'Empréstimo Consignado',v:191},{a:'Cédula de Crédito Rural',v:176},
-    {a:'Pagamento',v:175},{a:'Pensão por Morte',v:170},{a:'Citação',v:167},
-    {a:'Direito de Imagem',v:166},{a:'Usucapião Extraordinária',v:166}].reverse();
+  const d=[{a:'Alienação Fiduciária',v:536},{a:'Cédula de Crédito Bancário',v:356},
+    {a:'Aposentadoria Rural',v:285},{a:'Obrig. Fazer/Não Fazer',v:265},{a:'Mora',v:261},
+    {a:'Salário-Maternidade',v:248},{a:'Contratos Bancários',v:242},{a:'Esbulho/Turbação/Ameaça',v:216},
+    {a:'Empréstimo Consignado',v:191},{a:'Pensão por Morte',v:168},
+    {a:'Cédula de Crédito Rural',v:168},{a:'Usucapião Extraordinária',v:166},
+    {a:'Direito de Imagem',v:160},{a:'Pagamento',v:154},{a:'Aposen. Incapacidade',v:153}].reverse();
   new Chart(document.getElementById('cAss'),{type:'bar',
     data:{labels:d.map(x=>x.a),datasets:[{label:'Distribuídos',data:d.map(x=>x.v),
       backgroundColor:C.teal,borderRadius:3}]},
@@ -341,12 +341,13 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 
 // 4. Top 15 Classes
 (function(){
-  const d=[{c:'Procedimento Comum Cível',v:2415},{c:'Cumprimento de Sentença',v:1065},
+  const d=[{c:'Procedimento Comum Cível',v:2386},{c:'Cumprimento de Sentença',v:1060},
     {c:'Exec. Título Extrajudicial',v:864},{c:'Busca e Apreensão (Al. Fid.)',v:549},
-    {c:'Cumpr. Sentença c/ Fazenda',v:495},{c:'Carta Precatória (Físico)',v:278},
-    {c:'Usucapião',v:243},{c:'Carta Precatória Cível',v:205},{c:'Reintegração de Posse',v:195},
-    {c:'Monitória',v:160},{c:'Embargos à Execução',v:159},{c:'Cart. Precatória (Fís.) Cível',v:142},
-    {c:'Alvará Judicial',v:99},{c:'Ação Civil Pública',v:92},{c:'Outros Jurisdição Voluntária',v:85}].reverse();
+    {c:'Cumpr. Sentença c/ Fazenda',v:495},{c:'Usucapião',v:243},
+    {c:'Carta Precatória (Físico)',v:198},{c:'Reintegração de Posse',v:195},
+    {c:'Monitória',v:160},{c:'Embargos à Execução',v:155},{c:'Carta Precatória Cível',v:103},
+    {c:'Alvará Judicial',v:99},{c:'Ação Civil Pública',v:92},{c:'Cart. Precatória (Fís.) Cível',v:90},
+    {c:'Outros Jurisdição Voluntária',v:85}].reverse();
   new Chart(document.getElementById('cCls'),{type:'bar',
     data:{labels:d.map(x=>x.c),datasets:[{label:'Distribuídos',data:d.map(x=>x.v),
       backgroundColor:C.indigo,borderRadius:3}]},
